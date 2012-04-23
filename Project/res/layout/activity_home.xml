@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * Copyright (C) 2012 Binomed (http://blog.binomed.fr)
+ *
+ * Licensed under the Eclipse Public License - v 1.0;
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.eclipse.org/legal/epl-v10.html
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC 
+ * LICENSE ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM 
+ * CONSTITUTES RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ */ 
+ -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:padding="6dip">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+        <Button android:id="@+id/home_btn_feature1"
+            style="@style/HomeButton"
+            android:onClick="onClickFeature"
+            android:text="@string/action_map"
+            android:drawableTop="@drawable/ic_action_map"/>
+        <Button android:id="@+id/home_btn_feature2"
+            style="@style/HomeButton"
+            android:onClick="onClickFeature"
+            android:text="@string/action_new"
+            android:drawableTop="@drawable/ic_action_new"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+        <Button android:id="@+id/home_btn_feature3"
+            style="@style/HomeButton"
+            android:onClick="onClickFeature"
+            android:text="@string/action_about"
+            android:drawableTop="@drawable/ic_action_about"/>
+        <Button android:id="@+id/home_btn_feature4"
+            style="@style/HomeButton"
+            android:onClick="onClickFeature"
+            android:text="@string/action_help"
+            android:drawableTop="@drawable/ic_action_help"/>
+    </LinearLayout>
+</LinearLayout>

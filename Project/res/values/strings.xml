@@ -3,5 +3,9 @@
 
     <string name="hello">Hello World, DontForgetMomActivity!</string>
     <string name="app_name">DontForgetMom</string>
+    <string name="action_map">Trips</string>
+    <string name="action_new">New</string>
+    <string name="action_about">About</string>
+    <string name="action_help">Help</string>
 
 </resources>
