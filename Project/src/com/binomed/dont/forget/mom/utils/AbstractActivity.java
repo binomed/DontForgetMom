@@ -2,11 +2,11 @@ package com.binomed.dont.forget.mom.utils;
 
 import android.content.Intent;
 
-import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
-import com.binomed.dont.forget.mom.DontForgetMomActivity;
+import com.binomed.dont.forget.mom.screen.DontForgetMomActivity;
 
-public abstract class AbstractActivity extends SherlockActivity {
+public abstract class AbstractActivity extends SherlockFragmentActivity {
 
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
