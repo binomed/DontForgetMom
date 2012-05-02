@@ -29,12 +29,12 @@
             style="@style/HomeButton"
             android:onClick="onClickFeature"
             android:text="@string/action_map"
-            android:drawableTop="@drawable/ic_action_map"/>
+            android:drawableTop="@drawable/ic_trips"/>
         <Button android:id="@+id/home_btn_new"
             style="@style/HomeButton"
             android:onClick="onClickFeature"
             android:text="@string/action_new"
-            android:drawableTop="@drawable/ic_action_new"/>
+            android:drawableTop="@drawable/ic_new2"/>
     </LinearLayout>
 
     <LinearLayout
@@ -46,11 +46,11 @@
             style="@style/HomeButton"
             android:onClick="onClickFeature"
             android:text="@string/action_about"
-            android:drawableTop="@drawable/ic_action_about"/>
+            android:drawableTop="@drawable/ic_about2"/>
         <Button android:id="@+id/home_btn_help"
             style="@style/HomeButton"
             android:onClick="onClickFeature"
             android:text="@string/action_help"
-            android:drawableTop="@drawable/ic_action_help"/>
+            android:drawableTop="@drawable/ic_help"/>
     </LinearLayout>
 </LinearLayout>
