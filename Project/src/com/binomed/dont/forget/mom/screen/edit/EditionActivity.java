@@ -1,4 +1,4 @@
-package com.binomed.dont.forget.mom.edit;
+package com.binomed.dont.forget.mom.screen.edit;
 
 import android.os.Bundle;
 
@@ -12,7 +12,7 @@ public class EditionActivity extends AbstractActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.activity_new);
 
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);

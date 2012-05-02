@@ -1,12 +1,13 @@
-package com.binomed.dont.forget.mom;
+package com.binomed.dont.forget.mom.screen;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.binomed.dont.forget.mom.edit.EditionActivity;
-import com.binomed.dont.forget.mom.trips.TripsActivity;
+import com.binomed.dont.forget.mom.R;
+import com.binomed.dont.forget.mom.screen.edit.EditionActivity;
+import com.binomed.dont.forget.mom.screen.trips.TripsActivity;
 import com.binomed.dont.forget.mom.utils.AbstractActivity;
 
 public class DontForgetMomActivity extends AbstractActivity {

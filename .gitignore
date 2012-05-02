@@ -1,8 +1,9 @@
 
-/Project/bin/jarlist.cache
 /Libraries/ActionBarSherlock/bin
 /Libraries/HoloEverywhereLib/bin
 /Libraries/HoloEverywhereLib/gen
 /Libraries/ActionBarSherlock/gen
+/Libraries/ViewPagerIndicator/gen
+/Libraries/ViewPagerIndicator/bin
 /Project/bin
 /Project/gen
