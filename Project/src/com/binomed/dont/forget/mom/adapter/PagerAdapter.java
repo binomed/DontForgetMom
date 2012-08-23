@@ -1,11 +1,14 @@
 package com.binomed.dont.forget.mom.adapter;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
-import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 
-public class PagerAdapter extends FragmentPagerAdapter {
+import com.binomed.dont.forget.mom.screen.trips.CurentTripFragment;
+import com.viewpagerindicator.TitleProvider;
+
+public class PagerAdapter extends FragmentPagerAdapter implements TitleProvider {
 
 	private Fragment fragmentCurrent;
 	private Fragment fragmentOlds;
@@ -31,7 +34,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
 		}
 		default: {
 			if (fragmentCurrent == null) {
-
+				fragmentCurrent = new CurentTripFragment();
 			}
 			fragment = fragmentCurrent;
 		}
@@ -43,6 +46,11 @@ public class PagerAdapter extends FragmentPagerAdapter {
 	@Override
 	public int getCount() {
 		return 2;
+	}
+
+	@Override
+	public String getTitle(int position) {
+		return "Page " + position;
 	}
 
 }

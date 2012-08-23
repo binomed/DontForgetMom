@@ -6,8 +6,9 @@ import android.support.v4.view.ViewPager;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.binomed.dont.forget.mom.R;
+import com.binomed.dont.forget.mom.adapter.PagerAdapter;
 import com.binomed.dont.forget.mom.utils.AbstractActivity;
-import com.viewpagerindicator.PageIndicator;
+import com.viewpagerindicator.TabPageIndicator;
 
 public class TripsActivity extends AbstractActivity {
 
@@ -15,7 +16,10 @@ public class TripsActivity extends AbstractActivity {
 	ViewPager viewPager;
 
 	@InjectView(R.id.indicator)
-	PageIndicator pageIndicator;
+	TabPageIndicator pageIndicator;
+
+	PagerAdapter adapter;
+	ActionBar actionBar;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -23,8 +27,12 @@ public class TripsActivity extends AbstractActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
 
-		ActionBar actionBar = getSupportActionBar();
+		actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
+
+		adapter = new PagerAdapter(getSupportFragmentManager(), this);
+		viewPager.setAdapter(adapter);
+		pageIndicator.setViewPager(viewPager);
 
 	}
 
