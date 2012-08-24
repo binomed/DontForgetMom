@@ -7,5 +7,8 @@
     <string name="action_new">New</string>
     <string name="action_about">About</string>
     <string name="action_help">Help</string>
+    <string name="tab_old">Old trips</string>
+    <string name="tab_current">Curent travel</string>
+    <string name="no_trips">No trips done</string>
 
 </resources>
