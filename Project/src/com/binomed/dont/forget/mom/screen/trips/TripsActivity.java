@@ -25,15 +25,14 @@ public class TripsActivity extends AbstractActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_map);
+		setContentView(R.layout.activity_trips);
 
 		actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
 		adapter = new DontForgetMomPagerAdapter(getSupportFragmentManager(), this);
 		viewPager.setAdapter(adapter);
-		pageIndicator.setViewPager(viewPager);
-		pageIndicator.setCurrentItem(1);
+		pageIndicator.setViewPager(viewPager, 1);
 
 	}
 

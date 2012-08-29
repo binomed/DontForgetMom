@@ -4,11 +4,15 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="10"/>
+    <uses-sdk
+        android:minSdkVersion="7"
+        android:targetSdkVersion="10" />
 
     <application
+        android:name="DontForgetMomApplication"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name" android:theme="@style/Theme.HoloEverywhereLight.Sherlock" android:name="DontForgetMomApplication">
+        android:label="@string/app_name"
+        android:theme="@style/DonForgetMomTheme" >
         <activity
             android:name=".screen.DontForgetMomActivity"
             android:label="@string/app_name" >
@@ -18,8 +22,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:label="@string/action_new" android:name=".screen.edit.EditionActivity"></activity>
-        <activity android:label="@string/action_map" android:name=".screen.trips.TripsActivity"></activity>
+        <activity
+            android:name=".screen.edit.EditionActivity"
+            android:label="@string/action_new" >
+        </activity>
+        <activity
+            android:name=".screen.trips.TripsActivity"
+            android:label="@string/action_map"
+			android:theme="@style/DonForgetMomTheme">
+        </activity>
     </application>
 
 </manifest>

@@ -10,9 +10,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.binomed.dont.forget.mom.R;
 import com.binomed.dont.forget.mom.screen.trips.CurentTripFragment;
 import com.binomed.dont.forget.mom.screen.trips.OldTripsFragment;
-import com.viewpagerindicator.TitleProvider;
 
-public class DontForgetMomPagerAdapter extends FragmentPagerAdapter implements TitleProvider {
+public class DontForgetMomPagerAdapter extends FragmentPagerAdapter {// implements TitleProvider {
 
 	private static final String TAG = "DontForgetMomAdapter";
 
@@ -60,7 +59,9 @@ public class DontForgetMomPagerAdapter extends FragmentPagerAdapter implements T
 	}
 
 	@Override
-	public String getTitle(int position) {
+	public CharSequence getPageTitle(int position) {
+		// // TODO Auto-generated method stub
+		// return super.getPageTitle(position);
 		switch (position) {
 		case 0:
 			return oldTabName;
@@ -68,5 +69,15 @@ public class DontForgetMomPagerAdapter extends FragmentPagerAdapter implements T
 			return curentTabName;
 		}
 	}
+
+	// @Override
+	// public String getTitle(int position) {
+	// switch (position) {
+	// case 0:
+	// return oldTabName;
+	// default:
+	// return curentTabName;
+	// }
+	// }
 
 }
