@@ -14,14 +14,16 @@
  * CONSTITUTES RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
  */ 
  -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:layout_height="fill_parent" >
+
+    <com.gridlayout.GridLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:gridlayout="http://schemas.android.com/apk/res/com.binomed.dont.forget.mom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hello" />
+    </com.gridlayout.GridLayout>
 
-</LinearLayout>
+</ScrollView>

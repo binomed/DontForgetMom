@@ -12,11 +12,26 @@
  * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC 
  * LICENSE ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM 
  * CONSTITUTES RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
- */ 
- -->
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@android:id/list"
+ */ 
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
-</ListView>
+    android:layout_height="fill_parent" >
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+    </ListView>
+
+    <TextView
+        android:id="@android:id/empty"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical|center_horizontal"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+        android:text="@string/no_trips" />
+
+</RelativeLayout>
