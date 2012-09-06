@@ -17,13 +17,39 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
-
-    <com.gridlayout.GridLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:gridlayout="http://schemas.android.com/apk/res/com.binomed.dont.forget.mom"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        >
 
-    </com.gridlayout.GridLayout>
+        <TextView
+            android:id="@+id/tripName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="30dip"
+            android:layout_marginTop="5dip"
+            android:text="Trajet Paris"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <ImageView 
+            android:id="@+id/separator"
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:layout_marginTop="2dip"
+            android:layout_below="@+id/tripName"
+            android:src="@drawable/horizontal_line"
+            />
+        <TextView
+            android:id="@+id/control"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="30dip"
+            android:layout_marginTop="10dip"
+            android:layout_below="@+id/separator"
+            android:background="#EEEEEE"
+            android:text="CONTROLES"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
+    </RelativeLayout>
 </ScrollView>
