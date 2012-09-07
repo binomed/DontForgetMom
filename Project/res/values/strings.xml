@@ -10,5 +10,15 @@
     <string name="tab_old">Old trips</string>
     <string name="tab_current">Curent travel</string>
     <string name="no_trips">No trips done</string>
+    <!-- current Trips  -->
+    <string name="toggleBtnOn">ON</string>
+    <string name="toggleBtnOff">OFF</string>
+    <string name="control">Controls</string>
+    <string name="trackOn">Stop the tracking</string>
+    <string name="trackOff">Restart the tracking</string>
+    <string name="call">Call</string>
+    <string name="mails">Mails</string>
+    <string name="sms">SMS</string>
+    <string name="map">Map</string>
 
 </resources>
