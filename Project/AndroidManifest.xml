@@ -7,6 +7,10 @@
     <uses-sdk
         android:minSdkVersion="7"
         android:targetSdkVersion="10" />
+    <!-- Maps -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name="DontForgetMomApplication"

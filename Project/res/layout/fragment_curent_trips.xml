@@ -118,6 +118,18 @@
             android:text="@string/map"
             android:textAppearance="?android:attr/textAppearanceLarge" />
            
+            <WebView  
+			    android:id="@+id/webview"
+                android:layout_below="@+id/map"
+                android:layout_marginTop="10dip"
+                android:layout_marginLeft="50dip"
+                android:layout_marginRight="50dip"
+                android:layout_marginBottom="10dip"
+                android:layout_centerHorizontal="true"
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent"
+			/>
+            
             <!-- 
             <fragment android:name="map"
                 android:layout_below="@+id/map"
