@@ -4,7 +4,9 @@ import android.app.LocalActivityManager;
 import android.os.Bundle;
 import android.util.Log;
 
-public class LocalActivityManagerFragment extends RoboSherlockFragment {
+import com.actionbarsherlock.app.SherlockFragment;
+
+public class LocalActivityManagerFragment extends SherlockFragment {
 
 	private static final String TAG = LocalActivityManagerFragment.class.getSimpleName();
 	private static final String KEY_STATE_BUNDLE = "localActivityManagerState";

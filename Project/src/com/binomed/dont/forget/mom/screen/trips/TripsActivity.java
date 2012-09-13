@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Window;
 import com.binomed.dont.forget.mom.R;
 import com.binomed.dont.forget.mom.adapter.DontForgetMomPagerAdapter;
 import com.binomed.dont.forget.mom.utils.AbstractActivity;
@@ -26,10 +25,6 @@ public class TripsActivity extends AbstractActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		//This has to be called before setContentView and you must use the
-        //class in com.actionbarsherlock.view and NOT android.view
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
 		setContentView(R.layout.activity_trips);
 
