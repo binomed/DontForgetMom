@@ -35,6 +35,9 @@
             android:label="@string/action_map"
 			android:theme="@style/DonForgetMomTheme">
         </activity>
+        <activity android:name=".screen.trips.InnerMapActivity"></activity>
+        
+        <uses-library android:name="com.google.android.maps" />
     </application>
 
 </manifest>

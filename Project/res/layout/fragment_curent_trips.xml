@@ -118,6 +118,20 @@
             android:text="@string/map"
             android:textAppearance="?android:attr/textAppearanceLarge" />
            
+            
+            <LinearLayout 
+			    android:id="@+id/mapviewcontainer"
+                android:layout_below="@+id/map"
+                android:layout_marginTop="10dip"
+                android:layout_marginLeft="50dip"
+                android:layout_marginRight="50dip"
+                android:layout_marginBottom="10dip"
+                android:layout_centerHorizontal="true"
+			    android:layout_width="@dimen/size_map"
+			    android:layout_height="@dimen/size_map"
+                />
+            
+            <!-- 
             <WebView  
 			    android:id="@+id/webview"
                 android:layout_below="@+id/map"
@@ -126,9 +140,10 @@
                 android:layout_marginRight="50dip"
                 android:layout_marginBottom="10dip"
                 android:layout_centerHorizontal="true"
-			    android:layout_width="fill_parent"
-			    android:layout_height="fill_parent"
+			    android:layout_width="@dimen/size_map"
+			    android:layout_height="@dimen/size_map"
 			/>
+             -->
             
             <!-- 
             <fragment android:name="map"
