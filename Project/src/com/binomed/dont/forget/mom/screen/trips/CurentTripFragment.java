@@ -28,7 +28,7 @@ public class CurentTripFragment extends LocalActivityManagerFragment implements 
 
 	MapView mapView;
 	MapController mapController;
-	View innerMapView;
+	View innerMapView, mainView;
 	ViewGroup mapViewContainer;
 	DontForgetMomOverLay overLay;
 
@@ -40,15 +40,18 @@ public class CurentTripFragment extends LocalActivityManagerFragment implements 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-		View mainView = inflater.inflate(R.layout.fragment_curent_trips, container, false);
+		mainView = inflater.inflate(R.layout.fragment_curent_trips, container, false);
 		manageMapView(mainView);
-
-		ScrollView scrollView = (ScrollView) mainView.findViewById(R.id.scrollView);
-		// scrollView.scrollTo(0, 0);
-		scrollView.pageScroll(View.FOCUS_UP);// if you move at the end of the scroll
 
 		return mainView;
 
+	}
+
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		ScrollView scrollView = (ScrollView) mainView.findViewById(R.id.scrollView);
+		scrollView.smoothScrollTo(0, 0);
 	}
 
 	private void manageMapView(View mainView) {
