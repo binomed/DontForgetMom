@@ -39,6 +39,7 @@
 			android:theme="@style/DonForgetMomTheme">
         </activity>
         <activity android:name=".screen.trips.InnerMapActivity"></activity>
+        <activity android:name="TestSlindingActicity"></activity>
         
     </application>
 

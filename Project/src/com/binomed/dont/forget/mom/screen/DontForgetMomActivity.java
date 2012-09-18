@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.binomed.dont.forget.mom.R;
+import com.binomed.dont.forget.mom.TestSlindingActicity;
 import com.binomed.dont.forget.mom.screen.edit.EditionActivity;
 import com.binomed.dont.forget.mom.screen.trips.TripsActivity;
 import com.binomed.dont.forget.mom.utils.AbstractActivity;
@@ -36,6 +37,7 @@ public class DontForgetMomActivity extends AbstractActivity {
 			startActivity(new Intent(getApplicationContext(), EditionActivity.class));
 			break;
 		case R.id.home_btn_about:
+			startActivity(new Intent(getApplicationContext(), TestSlindingActicity.class));
 			// TODO
 			Toast.makeText(getApplicationContext(), "About", Toast.LENGTH_SHORT).show();
 			break;
