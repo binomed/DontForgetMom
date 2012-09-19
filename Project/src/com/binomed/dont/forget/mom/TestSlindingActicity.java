@@ -7,26 +7,27 @@ import com.actionbarsherlock.view.MenuItem;
 import com.binomed.dont.forget.mom.screen.trips.CurentTripFragment;
 import com.binomed.dont.forget.mom.screen.trips.OldTripsFragment;
 import com.binomed.dont.forget.mom.utils.AbstractActivity;
-import com.slidingmenu.lib.SlidingMenu;
 
 public class TestSlindingActicity extends AbstractActivity {
 
-	private SlidingMenu slideMenu;
+	// private SlidingMenu slideMenu;
 	ActionBar actionBar;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_slide);
 
-		slideMenu = (SlidingMenu) findViewById(R.id.slidingmenulayout);
+		setBehindContentView(R.layout.view_empty_slide);
+		getSupportFragmentManager().beginTransaction().add(R.id.emptySlide, new OldTripsFragment()).commit();
+		setContentView(R.layout.view_empty_slide_above);
+		getSupportFragmentManager().beginTransaction().add(R.id.emptySlideAbove, new CurentTripFragment()).commit();
+		// slideMenu = (SlidingMenu) findViewById(R.id.slidingmenulayout);
+		setSlidingActionBarEnabled(true);
 
 		actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
-		getSupportFragmentManager().beginTransaction().add(R.id.emptySlideAbove, new CurentTripFragment()).commit();
-		getSupportFragmentManager().beginTransaction().add(R.id.emptySlide, new OldTripsFragment()).commit();
 	}
 
 	@Override
@@ -43,20 +44,23 @@ public class TestSlindingActicity extends AbstractActivity {
 
 	}
 
-	public void toggle() {
-		if (slideMenu.isBehindShowing()) {
-			showAbove();
-		} else {
-			showBehind();
-		}
-	}
-
-	public void showAbove() {
-		slideMenu.showAbove();
-	}
-
-	public void showBehind() {
-		slideMenu.showBehind();
-	}
+	// @Override
+	// public void toggle() {
+	// if (slideMenu.isBehindShowing()) {
+	// showAbove();
+	// } else {
+	// showBehind();
+	// }
+	// }
+	//
+	// @Override
+	// public void showAbove() {
+	// slideMenu.showAbove();
+	// }
+	//
+	// @Override
+	// public void showBehind() {
+	// slideMenu.showBehind();
+	// }
 
 }

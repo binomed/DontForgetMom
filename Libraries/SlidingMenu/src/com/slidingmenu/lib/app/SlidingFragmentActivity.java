@@ -1,14 +1,14 @@
 package com.slidingmenu.lib.app;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.slidingmenu.lib.SlidingMenu;
 
-public class SlidingFragmentActivity extends FragmentActivity implements SlidingActivityBase {
+public class SlidingFragmentActivity extends SherlockFragmentActivity implements SlidingActivityBase {
 
 	private SlidingActivityHelper mHelper;
 
@@ -84,7 +84,8 @@ public class SlidingFragmentActivity extends FragmentActivity implements Sliding
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 		boolean b = mHelper.onKeyUp(keyCode, event);
-		if (b) return b;
+		if (b)
+			return b;
 		return super.onKeyUp(keyCode, event);
 	}
 

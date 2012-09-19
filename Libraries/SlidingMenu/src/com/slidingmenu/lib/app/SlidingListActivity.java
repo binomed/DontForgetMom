@@ -1,15 +1,15 @@
 package com.slidingmenu.lib.app;
 
-import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ListView;
 
+import com.actionbarsherlock.app.SherlockListActivity;
 import com.slidingmenu.lib.SlidingMenu;
 
-public class SlidingListActivity extends ListActivity implements SlidingActivityBase {
+public class SlidingListActivity extends SherlockListActivity implements SlidingActivityBase {
 
 	private SlidingActivityHelper mHelper;
 
@@ -88,7 +88,8 @@ public class SlidingListActivity extends ListActivity implements SlidingActivity
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 		boolean b = mHelper.onKeyUp(keyCode, event);
-		if (b) return b;
+		if (b)
+			return b;
 		return super.onKeyUp(keyCode, event);
 	}
 

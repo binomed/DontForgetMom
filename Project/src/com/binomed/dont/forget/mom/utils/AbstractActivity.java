@@ -23,13 +23,15 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.binomed.dont.forget.mom.R;
 import com.binomed.dont.forget.mom.screen.DontForgetMomActivity;
+import com.binomed.dont.forget.mom.screen.trips.OldTripsFragment;
 import com.google.inject.Inject;
 import com.google.inject.Key;
+import com.slidingmenu.lib.app.SlidingFragmentActivity;
 
-public abstract class AbstractActivity extends SherlockFragmentActivity implements RoboContext {
+public abstract class AbstractActivity extends SlidingFragmentActivity implements RoboContext {
 
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
@@ -54,12 +56,14 @@ public abstract class AbstractActivity extends SherlockFragmentActivity implemen
 	ContentViewListener ignored; // BUG find a better place to put this
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		final RoboInjector injector = RoboGuice.getInjector(this);
 		eventManager = injector.getInstance(EventManager.class);
 		injector.injectMembersWithoutViews(this);
 		super.onCreate(savedInstanceState);
 		eventManager.fire(new OnCreateEvent(savedInstanceState));
+		setBehindContentView(R.layout.view_empty_slide);
+		getSupportFragmentManager().beginTransaction().add(R.id.emptySlide, new OldTripsFragment()).commit();
 	}
 
 	@Override
