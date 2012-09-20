@@ -25,10 +25,10 @@ import android.os.Bundle;
 
 import com.actionbarsherlock.view.MenuItem;
 import com.binomed.dont.forget.mom.R;
-import com.binomed.dont.forget.mom.screen.DontForgetMomActivity;
-import com.binomed.dont.forget.mom.screen.trips.OldTripsFragment;
+import com.binomed.dont.forget.mom.screen.HomeFragment;
 import com.google.inject.Inject;
 import com.google.inject.Key;
+import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.app.SlidingFragmentActivity;
 
 public abstract class AbstractActivity extends SlidingFragmentActivity implements RoboContext {
@@ -38,9 +38,10 @@ public abstract class AbstractActivity extends SlidingFragmentActivity implement
 
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			final Intent intent = new Intent(this, DontForgetMomActivity.class);
-			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
+			toggle();
+			// final Intent intent = new Intent(this, DontForgetMomActivity.class);
+			// intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			// startActivity(intent);
 			return true;
 
 		default:
@@ -62,8 +63,17 @@ public abstract class AbstractActivity extends SlidingFragmentActivity implement
 		injector.injectMembersWithoutViews(this);
 		super.onCreate(savedInstanceState);
 		eventManager.fire(new OnCreateEvent(savedInstanceState));
+
 		setBehindContentView(R.layout.view_empty_slide);
-		getSupportFragmentManager().beginTransaction().add(R.id.emptySlide, new OldTripsFragment()).commit();
+		getSupportFragmentManager().beginTransaction().add(R.id.emptySlide, new HomeFragment()).commit();
+		// customize the SlidingMenu
+		SlidingMenu sm = getSlidingMenu();
+		sm.setBehindOffsetRes(R.dimen.actionbar_home_width);
+		sm.setShadowWidthRes(R.dimen.shadow_width);
+		sm.setShadowDrawable(R.drawable.shadow);
+
+		setSlidingActionBarEnabled(true);
+
 	}
 
 	@Override
