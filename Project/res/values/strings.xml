@@ -9,6 +9,7 @@
     <string name="action_help">Help</string>
     <string name="tab_old">Old trips</string>
     <string name="tab_current">Curent travel</string>
+    <!-- Old trips -->
     <string name="no_trips">No trips done</string>
     <!-- current Trips  -->
     <string name="toggleBtnOn">ON</string>
@@ -20,5 +21,27 @@
     <string name="mails">Mails</string>
     <string name="sms">SMS</string>
     <string name="map">Map</string>
+    <!-- New -->
+    <string name="tripInformation">Trip\'s informations</string>
+    <string name="tripName">Trip\'s name</string>
+    <string name="tripDestination">Trip\'s destination</string>
+    <string name="tripPlace">Place</string>
+    <string name="tripDate">Date</string>
+    <string name="tripDepartureDate">Day of departure</string>
+    <string name="tripPreciseHour">Precise hour of departure</string>
+    <string name="tripAlert">Alert information</string>
+    <string name="tripPrecision">Precision</string>
+    <string name="tripPrecisionLow">Low precision : 1km</string>
+    <string name="tripPrecisionMiddle">Fair precision : 100m</string>
+    <string name="tripPrecisionMHigh">High precision : 10m</string>
+    <string name="tripKindAlert">Kind of alert</string>
+    <string name="tripKAlertSMS">SMS alert</string>
+    <string name="tripKAlertMail">Mail alert</string>
+    <string name="tripKAlertMailSMS">Mail and SMS alert</string>
+    <string name="tripKAlertPhone">Phone alert</string>
+    <string name="tripAlertTo">Recipients</string>
+    <string name="tripAlertContent">Message content</string>
+    
+    
 
 </resources>
