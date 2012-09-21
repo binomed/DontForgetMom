@@ -24,7 +24,7 @@
     <!-- New -->
     <string name="tripInformation">Trip\'s informations</string>
     <string name="tripName">Trip\'s name</string>
-    <string name="tripDestination">Trip\'s destination</string>
+    <string name="tripDestination">Trip\'s destination</string> 
     <string name="tripPlace">Place</string>
     <string name="tripDate">Date</string>
     <string name="tripDepartureDate">Day of departure</string>
