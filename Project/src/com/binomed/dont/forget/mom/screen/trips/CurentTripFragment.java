@@ -1,8 +1,13 @@
 package com.binomed.dont.forget.mom.screen.trips;
 
+import net.londatiga.android.ActionItem;
+import net.londatiga.android.QuickAction;
+import net.londatiga.android.QuickAction.OnActionItemClickListener;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
@@ -11,10 +16,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.Window;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.binomed.dont.forget.mom.R;
@@ -24,7 +31,7 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 
 @SuppressLint("NewApi")
-public class CurentTripFragment extends LocalActivityManagerFragment implements LocationListener {
+public class CurentTripFragment extends LocalActivityManagerFragment implements LocationListener, OnClickListener {
 
 	MapView mapView;
 	MapController mapController;
@@ -36,12 +43,24 @@ public class CurentTripFragment extends LocalActivityManagerFragment implements 
 	private final static String ACTIVITY_TAG = "hosted";
 	private final static String TAG = "CurentTripFramgent";
 
+	private static final int ACTION_SMS = 0;
+	private static final int ACTION_MAIL = 1;
+	private static final int ACTION_CALL = 2;
+
 	/** Called when the activity is first created. */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		mainView = inflater.inflate(R.layout.fragment_curent_trips, container, false);
 		manageMapView(mainView);
+
+		TextView imgSms = (TextView) mainView.findViewById(R.id.imgSms);
+		TextView imgMail = (TextView) mainView.findViewById(R.id.imgMails);
+		TextView imgCall = (TextView) mainView.findViewById(R.id.imgCall);
+
+		imgSms.setOnClickListener(this);
+		imgMail.setOnClickListener(this);
+		imgCall.setOnClickListener(this);
 
 		return mainView;
 
@@ -215,4 +234,56 @@ public class CurentTripFragment extends LocalActivityManagerFragment implements 
 		}
 	}
 
+	@Override
+	public void onClick(View view) {
+		switch (view.getId()) {
+		case R.id.imgCall:
+			// TODO mettre l'icone de la personne avec le nom dessous
+			ActionItem callActionItem = new ActionItem(ACTION_CALL, getActivity().getResources().getDrawable(R.drawable.ic_about2_focus));
+			QuickAction quickAction = new QuickAction(getActivity());
+			quickAction.addActionItem(callActionItem);
+			quickAction.setOnActionItemClickListener(new OnActionItemClickListener() {
+
+				@Override
+				public void onItemClick(QuickAction source, int pos, int actionId) {
+					// TODO Auto-generated method stub
+
+				}
+			});
+			quickAction.show(view);
+			break;
+		case R.id.imgMails:
+		case R.id.imgSms:
+			AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+			alertDialog.setTitle(R.string.dialogConfirmation);
+			int pluralId = R.plurals.dialogConfirmationEmail;
+			if (view.getId() == R.id.imgSms) {
+				pluralId = R.plurals.dialogConfirmationSms;
+			}
+			alertDialog.setMessage(getResources().getQuantityString(pluralId, 1, null));
+			alertDialog.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+
+				}
+			});
+			alertDialog.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+
+				}
+			});
+			AlertDialog dialog = alertDialog.create();
+			dialog.show();
+			break;
+
+		default:
+			break;
+		}
+
+	}
 }

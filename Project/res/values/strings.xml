@@ -21,6 +21,17 @@
     <string name="mails">Mails</string>
     <string name="sms">SMS</string>
     <string name="map">Map</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="dialogConfirmation">Send confirmation ?</string>
+    <plurals name="dialogConfirmationEmail">
+        <item quantity="one">Do you want to send the mail to %1$s</item>
+        <item quantity="other">Do you want to send the mail to all</item>
+    </plurals>
+    <plurals name="dialogConfirmationSms">
+        <item quantity="one">Do you want to send the sms to %1$s</item>
+        <item quantity="other">Do you want to send the sms to all</item>
+    </plurals>
     <!-- New -->
     <string name="tripInformation">Trip\'s informations</string>
     <string name="tripName">Trip\'s name</string>
