@@ -55,11 +55,16 @@ public class HomeFragment extends RoboSherlockFragment implements OnClickListene
 	public void onClick(View v) {
 		int id = v.getId();
 		switch (id) {
-		case R.id.home_btn_map:
-			startActivity(new Intent(getActivity(), TripsActivity.class));
+		case R.id.home_btn_map: {
+			Intent intent = new Intent(getActivity(), TripsActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+			startActivity(intent);
 			break;
+		}
 		case R.id.home_btn_new:
-			startActivity(new Intent(getActivity(), EditionActivity.class));
+			Intent intent = new Intent(getActivity(), EditionActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+			startActivity(intent);
 			break;
 		case R.id.home_btn_about:
 			// TODO

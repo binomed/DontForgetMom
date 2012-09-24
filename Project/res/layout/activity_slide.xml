@@ -17,14 +17,4 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
-	<!-- 
-	 <com.slidingmenu.lib.SlidingMenu
-	    xmlns:sliding="http://schemas.android.com/apk/res-auto"
-	    android:id="@+id/slidingmenulayout"
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-	    sliding:viewAbove="@layout/view_empty_slide_above"
-    	sliding:viewBehind="@layout/view_empty_slide"
-	    sliding:behindWidth="100dip"/>
-	 -->
 </FrameLayout>

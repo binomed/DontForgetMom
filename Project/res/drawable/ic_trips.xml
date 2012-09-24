@@ -31,6 +31,6 @@
     	android:drawable="@drawable/ic_trips_focus" 
     />
     <item 
-    	android:drawable="@drawable/ic_trips" 
+    	android:drawable="@drawable/ic_trips_normal" 
     	/>
 </selector> 

@@ -15,12 +15,12 @@
  */ 
  -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
 <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         >
 
     	<TextView
@@ -110,6 +110,9 @@
                 android:layout_marginLeft="10dip"
                 android:layout_toLeftOf="@+id/btnContactPlace"
                 android:layout_gravity="center_vertical"
+                android:inputType="text"
+                android:lines="1"
+                
                 />
         </RelativeLayout>
          <TextView
@@ -165,8 +168,175 @@
             android:layout_toLeftOf="@+id/btnHour"
             android:layout_alignBottom="@+id/btnHour"
             android:text="@string/tripPreciseHour"/>
-         
+         <TextView
+            android:id="@+id/alert"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnHour"
+            android:paddingLeft="30dip"
+            android:layout_marginTop="10dip"
+            android:background="#EEEEEE"
+            android:text="@string/tripAlert"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <TextView
+            android:id="@+id/precisionTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dip"
+            android:layout_marginTop="10dip"
+            android:layout_below="@+id/alert"
+            android:text="@string/tripPrecision"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <ImageView 
+            android:id="@+id/separatorPrecision"
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:layout_marginTop="2dip"
+            android:layout_below="@+id/precisionTxt"
+            android:src="@drawable/horizontal_line"
+            />
+        <SeekBar 
+            android:id="@+id/seekPrecision"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_below="@+id/separatorPrecision"
+            />
+        <TextView
+            android:id="@+id/lblPrecision"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:layout_marginLeft="10dip"
+            android:layout_below="@+id/seekPrecision"
+            android:text="@string/tripPrecisionLow"/>
+         <TextView
+            android:id="@+id/kindAlertTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dip"
+            android:layout_marginTop="10dip"
+            android:layout_below="@+id/lblPrecision"
+            android:text="@string/tripKindAlert"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <ImageView 
+            android:id="@+id/separatorAlertKind"
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:layout_marginTop="2dip"
+            android:layout_below="@+id/kindAlertTxt"
+            android:src="@drawable/horizontal_line"
+            />
+        <RadioGroup 
+            android:id="@+id/radioGroupAlert"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:layout_marginLeft="20dip"
+            android:layout_below="@+id/separatorAlertKind"
+            >
+            <RadioButton
+                 android:id="@+id/alertSMS"
+            	 android:layout_width="fill_parent"
+	             android:layout_height="wrap_content"
+	             android:layout_marginTop="5dip"
+	             android:text="@string/tripKAlertSMS"
+                />
+            <RadioButton
+                 android:id="@+id/alertMail"
+            	 android:layout_width="fill_parent"
+	             android:layout_height="wrap_content"
+	             android:layout_marginTop="5dip"
+	             android:text="@string/tripKAlertMail"
+                />
+            <RadioButton
+                 android:id="@+id/alertMailSMS"
+            	 android:layout_width="fill_parent"
+	             android:layout_height="wrap_content"
+	             android:layout_marginTop="5dip"
+	             android:text="@string/tripKAlertMailSMS"
+                />
+            <RadioButton
+                 android:id="@+id/alertPhone"
+            	 android:layout_width="fill_parent"
+	             android:layout_height="wrap_content"
+	             android:layout_marginTop="5dip"
+	             android:text="@string/tripKAlertPhone"
+                />
+        </RadioGroup>
+         <TextView
+            android:id="@+id/alertRecipientTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dip"
+            android:layout_marginTop="10dip"
+            android:layout_below="@+id/radioGroupAlert"
+            android:text="@string/tripAlertTo"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <ImageView 
+            android:id="@+id/separatorAlertRecipient"
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:layout_marginTop="2dip"
+            android:layout_below="@+id/alertRecipientTxt"
+            android:src="@drawable/horizontal_line"
+            />
+         <RelativeLayout
+            android:id="@+id/layoutRecipient"
+            android:layout_below="@+id/separatorAlertRecipient"
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip" 
+            >
+            <ImageButton
+                android:id="@+id/btContactRecipient"
+                android:layout_marginRight="10dip"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_menu_add" 
+                />
+            <EditText
+                android:id="@+id/recipients"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dip"
+                android:layout_marginLeft="10dip"
+                android:layout_toLeftOf="@+id/btContactRecipient"
+                android:layout_gravity="center_vertical"
+                android:inputType="text"
+                android:lines="1"
+                />
+        </RelativeLayout>
+         <TextView
+            android:id="@+id/contentMessageTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dip"
+            android:layout_marginTop="10dip"
+            android:layout_below="@+id/layoutRecipient"
+            android:text="@string/tripAlertContent"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <ImageView 
+            android:id="@+id/separatorContentMessage"
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:layout_marginTop="2dip"
+            android:layout_below="@+id/contentMessageTxt"
+            android:src="@drawable/horizontal_line"
+            />
 
+        <EditText
+            android:id="@+id/messageContent"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:layout_below="@+id/separatorContentMessage"
+            android:inputType="textMultiLine" >
+
+        </EditText>
                     
     </RelativeLayout>
 </ScrollView>

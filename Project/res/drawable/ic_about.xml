@@ -31,6 +31,6 @@
     	android:drawable="@drawable/ic_about_focus" 
     />
     <item 
-    	android:drawable="@drawable/ic_about" 
+    	android:drawable="@drawable/ic_about_normal" 
     	/>
 </selector> 

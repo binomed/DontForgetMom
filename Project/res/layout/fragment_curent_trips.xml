@@ -120,7 +120,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
            
             
-            <LinearLayout 
+            <FrameLayout
 			    android:id="@+id/mapviewcontainer"
                 android:layout_below="@+id/map"
                 android:layout_marginTop="20dip"
