@@ -51,12 +51,24 @@
             android:layout_below="@+id/tripName"
             android:src="@drawable/horizontal_line"
             />
+         <EditText
+                android:id="@+id/tripNameTxt"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dip"
+                android:layout_marginTop="10dip"
+                android:layout_marginLeft="10dip"
+                android:layout_below="@+id/separatorTripName"
+                android:inputType="text"
+                android:lines="1"
+                
+                />
     	
     	<TextView
             android:id="@+id/destination"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/separatorTripName"
+            android:layout_below="@+id/tripNameTxt"
             android:paddingLeft="30dip"
             android:layout_marginTop="10dip"
             android:background="#EEEEEE"
@@ -92,7 +104,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_width="wrap_content" 
                 android:layout_height="wrap_content"
-                android:src="@android:drawable/ic_menu_mapmode" 
+                android:src="@drawable/ic_location_map" 
                 />
             <ImageButton
                 android:id="@+id/btnContactPlace"
@@ -100,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@+id/btnMap"
                 android:layout_marginRight="5dip"
-                android:src="@android:drawable/ic_menu_add" 
+                android:src="@drawable/ic_social_add_person" 
                 />
             <EditText
                 android:id="@+id/placeEdit"
@@ -296,7 +308,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_width="wrap_content" 
                 android:layout_height="wrap_content"
-                android:src="@android:drawable/ic_menu_add" 
+                android:src="@drawable/ic_social_add_person" 
                 />
             <EditText
                 android:id="@+id/recipients"

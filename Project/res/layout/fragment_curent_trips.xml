@@ -79,7 +79,7 @@
           </LinearLayout>
           <TextView
 	          android:id="@+id/imgMails"
-              android:drawableTop="@android:drawable/ic_dialog_email"
+              android:drawableTop="@drawable/ic_send_email"
               android:layout_width="wrap_content" 
               android:layout_height="wrap_content"
               android:layout_below="@+id/trackLayout"
@@ -89,7 +89,7 @@
               />
           <TextView
 	          android:id="@+id/imgCall"
-              android:drawableTop="@android:drawable/ic_menu_call"
+              android:drawableTop="@drawable/ic_action_call"
               android:layout_width="wrap_content" 
               android:layout_height="wrap_content"
               android:layout_alignTop="@+id/imgMails"
@@ -99,7 +99,7 @@
               />
           <TextView
 	          android:id="@+id/imgSms"
-              android:drawableTop="@android:drawable/ic_menu_send"
+              android:drawableTop="@drawable/ic_send_sms"
               android:layout_width="wrap_content" 
               android:layout_height="wrap_content"
               android:layout_alignTop="@+id/imgMails"
