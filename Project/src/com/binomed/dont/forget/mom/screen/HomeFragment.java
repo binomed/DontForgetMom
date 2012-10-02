@@ -14,6 +14,7 @@ import com.binomed.dont.forget.mom.R;
 import com.binomed.dont.forget.mom.screen.edit.EditionActivity;
 import com.binomed.dont.forget.mom.screen.trips.TripsActivity;
 import com.binomed.dont.forget.mom.utils.RoboSherlockFragment;
+import com.slidingmenu.lib.app.SlidingFragmentActivity;
 
 public class HomeFragment extends RoboSherlockFragment implements OnClickListener {
 
@@ -53,6 +54,7 @@ public class HomeFragment extends RoboSherlockFragment implements OnClickListene
 
 	@Override
 	public void onClick(View v) {
+		((SlidingFragmentActivity) getActivity()).toggle();
 		int id = v.getId();
 		switch (id) {
 		case R.id.home_btn_map: {

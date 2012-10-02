@@ -11,6 +11,9 @@
     <string name="tab_current">Curent travel</string>
     <!-- Old trips -->
     <string name="no_trips">No trips done</string>
+    <string name="old_action_replay">Replay</string>
+    <string name="old_action_duplicate">Duplicate</string>
+    <string name="old_action_view">View</string>    
     <!-- current Trips  -->
     <string name="toggleBtnOn">ON</string>
     <string name="toggleBtnOff">OFF</string>
