@@ -105,6 +105,7 @@
                 android:layout_width="wrap_content" 
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_location_map" 
+                android:onClick="onClick"
                 />
             <ImageButton
                 android:id="@+id/btnContactPlace"
@@ -112,7 +113,8 @@
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@+id/btnMap"
                 android:layout_marginRight="5dip"
-                android:src="@drawable/ic_social_add_person" 
+                android:src="@drawable/ic_social_add_person"
+                android:onClick="onClick" 
                 />
             <EditText
                 android:id="@+id/placeEdit"
@@ -151,7 +153,9 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="10dip"
             android:layout_marginRight="10dip"
-            android:layout_below="@+id/separatorDate"/>
+            android:layout_below="@+id/separatorDate"
+            android:onClick="onClick"
+            />
          <TextView
             android:id="@+id/departDate"
             android:layout_width="wrap_content"
@@ -169,7 +173,10 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="10dip"
             android:layout_marginRight="10dip"
-            android:layout_below="@+id/departDate"/>
+            android:layout_below="@+id/departDate"
+            android:enabled="false"
+            android:onClick="onClick"
+            />
          <CheckBox
             android:id="@+id/departHour"
             android:layout_width="wrap_content"
@@ -179,7 +186,9 @@
             android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@+id/btnHour"
             android:layout_alignBottom="@+id/btnHour"
-            android:text="@string/tripPreciseHour"/>
+            android:text="@string/tripPreciseHour"
+            android:onClick="onClick"
+            />
          <TextView
             android:id="@+id/alert"
             android:layout_width="fill_parent"
@@ -309,6 +318,7 @@
                 android:layout_width="wrap_content" 
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_social_add_person" 
+                android:onClick="onClick"
                 />
             <EditText
                 android:id="@+id/recipients"
