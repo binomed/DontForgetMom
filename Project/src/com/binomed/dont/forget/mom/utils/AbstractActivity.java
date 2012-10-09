@@ -22,7 +22,9 @@ import roboguice.util.RoboContext;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.binomed.dont.forget.mom.R;
 import com.binomed.dont.forget.mom.screen.HomeFragment;
@@ -33,6 +35,9 @@ import com.slidingmenu.lib.app.SlidingFragmentActivity;
 
 public abstract class AbstractActivity extends SlidingFragmentActivity implements RoboContext {
 
+	private static final int ITEM_ABOUT = 1;
+	private static final int ITEM_INFO = 2;
+
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 
@@ -42,6 +47,12 @@ public abstract class AbstractActivity extends SlidingFragmentActivity implement
 			// final Intent intent = new Intent(this, DontForgetMomActivity.class);
 			// intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			// startActivity(intent);
+			return true;
+		case ITEM_ABOUT:
+			Toast.makeText(this, "About", Toast.LENGTH_SHORT).show();
+			return true;
+		case ITEM_INFO:
+			Toast.makeText(this, "Info", Toast.LENGTH_SHORT).show();
 			return true;
 
 		default:
@@ -74,6 +85,19 @@ public abstract class AbstractActivity extends SlidingFragmentActivity implement
 
 		setSlidingActionBarEnabled(true);
 
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		menu.add(0, ITEM_ABOUT, 1, R.string.action_about) //
+				.setIcon(R.drawable.ic_action_about) //
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		menu.add(0, ITEM_INFO, 1, R.string.action_help) //
+				.setIcon(R.drawable.ic_action_help) //
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+
+		return true;
 	}
 
 	@Override
