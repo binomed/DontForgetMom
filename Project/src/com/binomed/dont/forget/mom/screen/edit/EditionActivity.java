@@ -2,6 +2,7 @@ package com.binomed.dont.forget.mom.screen.edit;
 
 import roboguice.inject.InjectView;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
@@ -16,6 +17,8 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.binomed.dont.forget.mom.R;
+import com.binomed.dont.forget.mom.db.DontForgetMomContentProvider;
+import com.binomed.dont.forget.mom.db.DontForgetMomDbInformation;
 import com.binomed.dont.forget.mom.dialog.DateDialogFragment;
 import com.binomed.dont.forget.mom.dialog.TimeDialogFragment;
 import com.binomed.dont.forget.mom.utils.AbstractActivity;
@@ -57,6 +60,33 @@ public class EditionActivity extends AbstractActivity {
 
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
+
+		initDatas();
+	}
+
+	private void initDatas() {
+
+		String[] projection = null;
+		String selection = null;
+		String[] selectionArgs = null;
+		long tripId = getIntent().getLongExtra(DontForgetMomDbInformation.Trip.TRIP_ID, -1);
+		Cursor cursorTrip = null;
+		if (tripId != -1) {
+			selection = DontForgetMomDbInformation.Trip.TRIP_ID + " = ? ";
+			selectionArgs = new String[] { String.valueOf(tripId) };
+
+			cursorTrip = getContentResolver().query(DontForgetMomContentProvider.CONTENT_URI //
+					, projection //
+					, selection //
+					, selectionArgs //
+					, null // sortOrder
+					);
+		}
+
+		if (cursorTrip != null && cursorTrip.moveToFirst()) {
+
+		}
+
 	}
 
 	@Override

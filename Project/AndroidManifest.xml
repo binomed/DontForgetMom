@@ -46,7 +46,7 @@
         <activity android:name=".screen.trips.InnerMapActivity"></activity>
         
      <provider android:name="com.binomed.dont.forget.mom.db.DontForgetMomContentProvider"
-			android:authorities="com.bibomed.dont.forget.mom.db.dontforgetmomprovider"
+			android:authorities="com.bibomed.dont.forget.mom.db"
 			android:exported="false" />
     </application>
     
