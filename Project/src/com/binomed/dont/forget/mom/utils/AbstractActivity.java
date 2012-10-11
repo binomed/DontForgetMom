@@ -90,10 +90,10 @@ public abstract class AbstractActivity extends SlidingFragmentActivity implement
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
-		menu.add(0, ITEM_ABOUT, 1, R.string.action_about) //
+		menu.add(0, ITEM_ABOUT, Menu.NONE, R.string.action_about) //
 				.setIcon(R.drawable.ic_action_about) //
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		menu.add(0, ITEM_INFO, 1, R.string.action_help) //
+		menu.add(0, ITEM_INFO, Menu.NONE, R.string.action_help) //
 				.setIcon(R.drawable.ic_action_help) //
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 

@@ -1,5 +1,8 @@
 package com.binomed.dont.forget.mom.screen.edit;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 import roboguice.inject.InjectView;
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,8 +13,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
@@ -23,7 +29,7 @@ import com.binomed.dont.forget.mom.dialog.DateDialogFragment;
 import com.binomed.dont.forget.mom.dialog.TimeDialogFragment;
 import com.binomed.dont.forget.mom.utils.AbstractActivity;
 
-public class EditionActivity extends AbstractActivity {
+public class EditionActivity extends AbstractActivity implements OnSeekBarChangeListener {
 
 	public static final int ITEM_SAVE = 3;
 
@@ -43,14 +49,27 @@ public class EditionActivity extends AbstractActivity {
 	CheckBox departHour;
 	@InjectView(R.id.seekPrecision)
 	SeekBar seekPrecision;
+	@InjectView(R.id.lblPrecision)
+	TextView lblPrecision;
 	@InjectView(R.id.radioGroupAlert)
 	RadioGroup radioGroupAlert;
+	@InjectView(R.id.alertSMS)
+	RadioButton alertSMS;
+	@InjectView(R.id.alertMail)
+	RadioButton alertMail;
+	@InjectView(R.id.alertMailSMS)
+	RadioButton alertMailSMS;
+	@InjectView(R.id.alertPhone)
+	RadioButton alertPhone;
 	@InjectView(R.id.btContactRecipient)
 	ImageButton btContactRecipient;
 	@InjectView(R.id.recipients)
 	EditText recipients;
 	@InjectView(R.id.messageContent)
 	EditText messageContent;
+
+	private DateFormat timeFormat;
+	private DateFormat dateFormat;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -60,8 +79,15 @@ public class EditionActivity extends AbstractActivity {
 
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
+		timeFormat = android.text.format.DateFormat.getTimeFormat(this);
+		dateFormat = android.text.format.DateFormat.getDateFormat(this);
 
+		initListeners();
 		initDatas();
+	}
+
+	private void initListeners() {
+		seekPrecision.setOnSeekBarChangeListener(this);
 	}
 
 	private void initDatas() {
@@ -84,7 +110,17 @@ public class EditionActivity extends AbstractActivity {
 		}
 
 		if (cursorTrip != null && cursorTrip.moveToFirst()) {
-
+		} else {
+			tripNameTxt.setText("");
+			placeEdit.setText("");
+			Date today = new Date();
+			btnDate.setText(dateFormat.format(today));
+			btnHour.setText(timeFormat.format(today));
+			seekPrecision.setProgress(50);
+			lblPrecision.setText(R.string.tripPrecisionMiddle);
+			alertSMS.setChecked(true);
+			recipients.setText("");
+			messageContent.setText("");
 		}
 
 	}
@@ -92,7 +128,7 @@ public class EditionActivity extends AbstractActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
-		menu.add(0, ITEM_SAVE, 1, R.string.action_save) //
+		menu.add(1, ITEM_SAVE, Menu.NONE, R.string.action_save) //
 				.setIcon(R.drawable.ic_action_save) //
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		super.onCreateOptionsMenu(menu);
@@ -140,6 +176,26 @@ public class EditionActivity extends AbstractActivity {
 		default:
 			break;
 		}
+	}
+
+	@Override
+	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+		lblPrecision.requestFocus();
+		if (progress < 33) {
+			lblPrecision.setText(R.string.tripPrecisionMHigh);
+		} else if (progress < 66) {
+			lblPrecision.setText(R.string.tripPrecisionMiddle);
+		} else {
+			lblPrecision.setText(R.string.tripPrecisionLow);
+		}
+	}
+
+	@Override
+	public void onStartTrackingTouch(SeekBar seekBar) {
+	}
+
+	@Override
+	public void onStopTrackingTouch(SeekBar seekBar) {
 	}
 
 }

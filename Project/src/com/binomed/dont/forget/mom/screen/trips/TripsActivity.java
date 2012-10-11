@@ -46,7 +46,7 @@ public class TripsActivity extends AbstractActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
-		menu.add(0, ITEM_NEW, 1, R.string.action_new) //
+		menu.add(1, ITEM_NEW, Menu.NONE, R.string.action_new) //
 				.setIcon(R.drawable.ic_action_new) //
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		super.onCreateOptionsMenu(menu);
