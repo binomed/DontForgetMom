@@ -116,7 +116,7 @@
                 android:src="@drawable/ic_social_add_person"
                 android:onClick="onClick" 
                 />
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/placeEdit"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
