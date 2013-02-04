@@ -7,10 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.TextView;
 
 import com.binomed.dont.forget.mom.model.Contact;
 import com.binomed.dont.forget.mom.service.contact.ContactService;
+import com.binomed.dont.forget.mom.view.ContactView;
 
 public class DontForgetMomContactPlaceAdapter extends CursorAdapter implements Filterable {
 
@@ -20,27 +20,27 @@ public class DontForgetMomContactPlaceAdapter extends CursorAdapter implements F
 
 	@Override
 	public void bindView(View view, Context ctx, Cursor cursor) {
-		TextView txtView = null;
+		ContactView txtView = null;
 		if (view == null) {
-			txtView = new TextView(ctx);
+			txtView = new ContactView(ctx);
 		} else {
-			txtView = (TextView) view;
+			txtView = (ContactView) view;
 		}
 
 		Contact contact = ContactService.getContact(cursor, null);
 
-		txtView.setText(contact.getDisplayName());
+		txtView.setContact(contact.getDisplayName(), "", null);
 
 	}
 
 	@Override
 	public View newView(Context ctx, Cursor cursor, ViewGroup root) {
-		TextView txtView = null;
-		txtView = new TextView(ctx);
+		ContactView txtView = null;
+		txtView = new ContactView(ctx);
 
 		Contact contact = ContactService.getContact(cursor, null);
 
-		txtView.setText(contact.getDisplayName());
+		txtView.setContact(contact.getDisplayName(), "", null);
 		return txtView;
 	}
 
