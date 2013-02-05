@@ -186,8 +186,10 @@ public class ContactService {
 		ContactsContract.CommonDataKinds.StructuredPostal.FORMATTED_ADDRESS, //
 				ContactsContract.CommonDataKinds.StructuredPostal.CONTACT_ID //
 		};
-		String where = ContactsContract.CommonDataKinds.StructuredPostal.FORMATTED_ADDRESS + " like ? AND " + ContactsContract.Data.MIMETYPE + " = ?";
-		String[] whereParameters = new String[] { "%" + adress + "%", ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE };
+		String where = "( " + ContactsContract.CommonDataKinds.StructuredPostal.DISPLAY_NAME + " like ? " //
+				+ " OR " + ContactsContract.CommonDataKinds.StructuredPostal.FORMATTED_ADDRESS + " like ? )" //
+				+ " AND " + ContactsContract.Data.MIMETYPE + " = ?";
+		String[] whereParameters = new String[] { "%" + adress + "%", "%" + adress + "%", ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE };
 		if (adress == null || adress.length() == 0) {
 			where = ContactsContract.Data.MIMETYPE + " = ?";
 			whereParameters = new String[] { ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE };
@@ -292,11 +294,11 @@ public class ContactService {
 		contact.setId(id);
 		contact.setDisplayName(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
 
-		// contact.setPhotoBitmap(getPhotoStream(id, contentResolver));
-		// contact.setPhone(getPhoneNumbers(id, contentResolver));
+		contact.setPhotoBitmap(getPhotoStream(id, contentResolver));
+		contact.setPhone(getPhoneNumbers(id, contentResolver));
 
-		// contact.setEmail(getEmailAddresses(id, contentResolver));
-		// contact.setAddresses(getContactAddresses(id, contentResolver));
+		contact.setEmail(getEmailAddresses(id, contentResolver));
+		contact.setAddresses(getContactAddresses(id, contentResolver));
 
 		return contact;
 	}

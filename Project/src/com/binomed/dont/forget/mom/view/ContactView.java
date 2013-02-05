@@ -32,8 +32,11 @@ public class ContactView extends RelativeLayout {
 	public void setContact(String displayName, String detail, Bitmap img) {
 		contactDisplayName.setText(displayName);
 		contactDetail.setText(detail);
-		contactImg.setImageBitmap(img);
+		if (img == null) {
+			contactImg.setImageResource(R.drawable.ic_contact_picture);
+		} else {
+			contactImg.setImageBitmap(img);
+		}
 
 	}
-
 }

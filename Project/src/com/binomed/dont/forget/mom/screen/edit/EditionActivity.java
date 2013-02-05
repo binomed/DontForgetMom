@@ -40,10 +40,10 @@ public class EditionActivity extends AbstractActivity implements OnSeekBarChange
 	EditText tripNameTxt;
 	@InjectView(R.id.placeEdit)
 	AutoCompleteTextView placeEdit;
-	@InjectView(R.id.btnMap)
-	ImageButton btnMap;
-	@InjectView(R.id.btnContactPlace)
-	ImageButton btnContactPlace;
+	// @InjectView(R.id.btnMap)
+	// ImageButton btnMap;
+	// @InjectView(R.id.btnContactPlace)
+	// ImageButton btnContactPlace;
 	@InjectView(R.id.btnDate)
 	Button btnDate;
 	@InjectView(R.id.btnHour)
@@ -160,10 +160,10 @@ public class EditionActivity extends AbstractActivity implements OnSeekBarChange
 
 	public void onClick(final View view) {
 		switch (view.getId()) {
-		case R.id.btnMap:
-			break;
-		case R.id.btnContactPlace:
-			break;
+		// case R.id.btnMap:
+		// break;
+		// case R.id.btnContactPlace:
+		// break;
 		case R.id.btnDate:
 			DialogFragment dateFragment = new DateDialogFragment();
 			dateFragment.show(getSupportFragmentManager(), "datePicker");
