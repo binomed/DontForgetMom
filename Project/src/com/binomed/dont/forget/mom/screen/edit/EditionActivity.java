@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -23,10 +24,12 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.binomed.dont.forget.mom.R;
+import com.binomed.dont.forget.mom.adapter.DontForgetMomContactPlaceAdapter;
 import com.binomed.dont.forget.mom.db.DontForgetMomContentProvider;
 import com.binomed.dont.forget.mom.db.DontForgetMomDbInformation;
 import com.binomed.dont.forget.mom.dialog.DateDialogFragment;
 import com.binomed.dont.forget.mom.dialog.TimeDialogFragment;
+import com.binomed.dont.forget.mom.service.contact.ContactService;
 import com.binomed.dont.forget.mom.utils.AbstractActivity;
 
 public class EditionActivity extends AbstractActivity implements OnSeekBarChangeListener {
@@ -36,7 +39,7 @@ public class EditionActivity extends AbstractActivity implements OnSeekBarChange
 	@InjectView(R.id.tripNameTxt)
 	EditText tripNameTxt;
 	@InjectView(R.id.placeEdit)
-	EditText placeEdit;
+	AutoCompleteTextView placeEdit;
 	@InjectView(R.id.btnMap)
 	ImageButton btnMap;
 	@InjectView(R.id.btnContactPlace)
@@ -123,6 +126,9 @@ public class EditionActivity extends AbstractActivity implements OnSeekBarChange
 			messageContent.setText("");
 		}
 
+		DontForgetMomContactPlaceAdapter adapter = new DontForgetMomContactPlaceAdapter(this, ContactService.getContactsWithAdressCursor(getContentResolver(), null));
+
+		placeEdit.setAdapter(adapter);
 	}
 
 	@Override

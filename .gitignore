@@ -1,5 +1,8 @@
 
 /Libraries/ActionBarSherlock/bin
+/Libraries/ActionBarSherlock/gen
+/Libraries/ActionBarSherlock/target
+/Libraries/ActionBarSherlock/tmp
 /Libraries/HoloEverywhereLib/bin
 /Libraries/HoloEverywhereLib/gen
 /Libraries/ActionBarSherlock/gen
