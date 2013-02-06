@@ -50,12 +50,17 @@ public class DontForgetMomContactAdapter extends CursorAdapter implements Filter
 			detail = contact.getAdress().getFormatted_address();
 			break;
 		case MAIL:
-
+			contact = ContactService.getContactWithEmail(cursor, this.contentResolver);
+			detail = contact.getEmail().getData();
 			break;
 		case PHONE:
+			contact = ContactService.getContactWithPhoneNumber(cursor, this.contentResolver);
+			detail = contact.getPhone().getData();
 
 			break;
 		case PHONE_MAIL:
+			contact = ContactService.getContactWithEmailOrPhone(cursor, this.contentResolver);
+			detail = contact.getPhone() != null ? contact.getPhone().getData() : contact.getEmail().getData();
 
 			break;
 
@@ -81,14 +86,14 @@ public class DontForgetMomContactAdapter extends CursorAdapter implements Filter
 			contact = ContactService.getContactWithAdress(cursor, this.contentResolver);
 			return contact.getAdress().getFormatted_address();
 		case MAIL:
-
-			return null;
+			contact = ContactService.getContactWithEmail(cursor, this.contentResolver);
+			return contact.getEmail().getData();
 		case PHONE:
-
-			return null;
+			contact = ContactService.getContactWithPhoneNumber(cursor, this.contentResolver);
+			return contact.getPhone().getData();
 		case PHONE_MAIL:
-
-			return null;
+			contact = ContactService.getContactWithEmailOrPhone(cursor, this.contentResolver);
+			return contact.getPhone() != null ? contact.getPhone().getData() : contact.getEmail().getData();
 
 		default:
 			return null;
@@ -106,14 +111,12 @@ public class DontForgetMomContactAdapter extends CursorAdapter implements Filter
 		default:
 			return ContactService.getContactsWithAdressCursor(contentResolver, constraint.toString());
 		case MAIL:
-
-			return null;
+			return ContactService.getContactsWithEmailCursor(contentResolver, constraint.toString());
 		case PHONE:
+			return ContactService.getContactsWithPhoneNumberCursor(contentResolver, constraint.toString());
 
-			return null;
 		case PHONE_MAIL:
-
-			return null;
+			return ContactService.getContactsWithEmailAndPhoneCursor(contentResolver, constraint.toString());
 		}
 
 	}
