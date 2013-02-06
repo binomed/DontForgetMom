@@ -13,7 +13,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
@@ -24,7 +23,8 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.binomed.dont.forget.mom.R;
-import com.binomed.dont.forget.mom.adapter.DontForgetMomContactPlaceAdapter;
+import com.binomed.dont.forget.mom.adapter.DontForgetMomContactAdapter;
+import com.binomed.dont.forget.mom.adapter.DontForgetMomContactAdapter.TypeDatas;
 import com.binomed.dont.forget.mom.db.DontForgetMomContentProvider;
 import com.binomed.dont.forget.mom.db.DontForgetMomDbInformation;
 import com.binomed.dont.forget.mom.dialog.DateDialogFragment;
@@ -40,10 +40,6 @@ public class EditionActivity extends AbstractActivity implements OnSeekBarChange
 	EditText tripNameTxt;
 	@InjectView(R.id.placeEdit)
 	AutoCompleteTextView placeEdit;
-	// @InjectView(R.id.btnMap)
-	// ImageButton btnMap;
-	// @InjectView(R.id.btnContactPlace)
-	// ImageButton btnContactPlace;
 	@InjectView(R.id.btnDate)
 	Button btnDate;
 	@InjectView(R.id.btnHour)
@@ -64,15 +60,17 @@ public class EditionActivity extends AbstractActivity implements OnSeekBarChange
 	RadioButton alertMailSMS;
 	@InjectView(R.id.alertPhone)
 	RadioButton alertPhone;
-	@InjectView(R.id.btContactRecipient)
-	ImageButton btContactRecipient;
+	// @InjectView(R.id.btContactRecipient)
+	// ImageButton btContactRecipient;
 	@InjectView(R.id.recipients)
-	EditText recipients;
+	AutoCompleteTextView recipients;
 	@InjectView(R.id.messageContent)
 	EditText messageContent;
 
 	private DateFormat timeFormat;
 	private DateFormat dateFormat;
+
+	private DontForgetMomContactAdapter adapterPlace, adapterRecipent;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -126,9 +124,17 @@ public class EditionActivity extends AbstractActivity implements OnSeekBarChange
 			messageContent.setText("");
 		}
 
-		DontForgetMomContactPlaceAdapter adapter = new DontForgetMomContactPlaceAdapter(this, ContactService.getContactsWithAdressCursor(getContentResolver(), null));
+		adapterPlace = new DontForgetMomContactAdapter(this, //
+				ContactService.getContactsWithAdressCursor(getContentResolver(), null),//
+				TypeDatas.ADRESS//
+		);
+		// adapterRecipent = new DontForgetMomContactAdapter(this, //
+		// ContactService.getContactsWithAdressCursor(getContentResolver(), null),//
+		// TypeDatas.PHONE//
+		// );
 
-		placeEdit.setAdapter(adapter);
+		placeEdit.setAdapter(adapterPlace);
+		// recipients.setAdapter(adapterRecipent);
 	}
 
 	@Override
@@ -175,9 +181,9 @@ public class EditionActivity extends AbstractActivity implements OnSeekBarChange
 		case R.id.departHour:
 			btnHour.setEnabled(departHour.isChecked());
 			break;
-		case R.id.btContactRecipient:
-
-			break;
+		// case R.id.btContactRecipient:
+		//
+		// break;
 
 		default:
 			break;

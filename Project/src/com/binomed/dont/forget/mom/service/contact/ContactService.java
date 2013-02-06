@@ -13,7 +13,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.ContactsContract;
 
-import com.binomed.dont.forget.mom.model.Address;
+import com.binomed.dont.forget.mom.model.Adress;
 import com.binomed.dont.forget.mom.model.Contact;
 import com.binomed.dont.forget.mom.model.Email;
 import com.binomed.dont.forget.mom.model.Phone;
@@ -87,86 +87,7 @@ public class ContactService {
 			while (cur.moveToNext()) {
 				contactTmp = getContact(cur, contentResolver);
 				if (contactTmp != null) {
-					contactTmp.setPhone(mapPhones.get(contactTmp.getId()));
-					contacts.add(contactTmp);
-
-				}
-			}
-		}
-
-		return contacts;
-
-	}
-
-	public static List<Contact> getContactsWithAdress(ContentResolver contentResolver, String adress) {
-
-		HashMap<String, ArrayList<Address>> mapAdress = new HashMap<String, ArrayList<Address>>();
-		ArrayList<Address> addrList = new ArrayList<Address>();
-
-		String[] projectionAdress = new String[] { //
-		ContactsContract.CommonDataKinds.StructuredPostal.FORMATTED_ADDRESS, //
-				ContactsContract.CommonDataKinds.StructuredPostal.CONTACT_ID //
-		};
-		String where = ContactsContract.CommonDataKinds.StructuredPostal.FORMATTED_ADDRESS + " like ? AND " + ContactsContract.Data.MIMETYPE + " = ?";
-		String[] whereParameters = new String[] { "%" + adress + "%", ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE };
-		if (adress == null || adress.length() == 0) {
-			where = ContactsContract.Data.MIMETYPE + " = ?";
-			whereParameters = new String[] { ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE };
-		}
-
-		Cursor addrCur = contentResolver.query( //
-				ContactsContract.Data.CONTENT_URI //
-				, projectionAdress //
-				, where //
-				, whereParameters //
-				, null //
-				);
-		Address address = null;
-		String contactId = null;
-		while (addrCur.moveToNext()) {
-			address = new Address();
-			address.setFormattedAddress(addrCur.getString(addrCur.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.FORMATTED_ADDRESS)));
-			contactId = addrCur.getString(addrCur.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.CONTACT_ID));
-			addrList = mapAdress.get(contactId);
-			if (addrList == null) {
-				addrList = new ArrayList<Address>();
-				mapAdress.put(contactId, addrList);
-			}
-			addrList.add(address);
-		}
-		addrCur.close();
-
-		List<Contact> contacts = new ArrayList<Contact>();
-
-		String[] projection = new String[] { //
-		ContactsContract.Contacts._ID //
-				, ContactsContract.Contacts.DISPLAY_NAME //
-		};
-		StringBuilder selection = new StringBuilder(ContactsContract.Contacts._ID).append(" in (");
-		String[] selectionArg = new String[mapAdress.size()];
-		boolean first = true;
-		int i = 0;
-		for (String contactIdTmp : mapAdress.keySet()) {
-			if (!first) {
-				selection.append(",");
-			}
-			first = false;
-			selection.append(contactId).append("?");
-			selectionArg[i] = contactIdTmp;
-			i++;
-		}
-		selection.append(")");
-		Cursor cur = contentResolver.query(ContactsContract.Contacts.CONTENT_URI //
-				, projection //
-				, selection.toString() //
-				, selectionArg //
-				, null);
-		if (cur.getCount() > 0) {
-			Contact contactTmp = null;
-			while (cur.moveToNext()) {
-				contactTmp = getContact(cur, contentResolver);
-				if (contactTmp != null) {
-					contactTmp.setAddresses(mapAdress.get(contactTmp.getId()));
+					// contactTmp.setPhone(mapPhones.get(contactTmp.getId()));
 					contacts.add(contactTmp);
 
 				}
@@ -179,12 +100,11 @@ public class ContactService {
 
 	public static Cursor getContactsWithAdressCursor(ContentResolver contentResolver, String adress) {
 
-		HashMap<String, ArrayList<Address>> mapAdress = new HashMap<String, ArrayList<Address>>();
-		ArrayList<Address> addrList = new ArrayList<Address>();
-
 		String[] projectionAdress = new String[] { //
-		ContactsContract.CommonDataKinds.StructuredPostal.FORMATTED_ADDRESS, //
-				ContactsContract.CommonDataKinds.StructuredPostal.CONTACT_ID //
+		ContactsContract.CommonDataKinds.StructuredPostal._ID, //
+				ContactsContract.CommonDataKinds.StructuredPostal.FORMATTED_ADDRESS, //
+				ContactsContract.CommonDataKinds.StructuredPostal.CONTACT_ID, //
+				ContactsContract.CommonDataKinds.StructuredPostal.DISPLAY_NAME //
 		};
 		String where = "( " + ContactsContract.CommonDataKinds.StructuredPostal.DISPLAY_NAME + " like ? " //
 				+ " OR " + ContactsContract.CommonDataKinds.StructuredPostal.FORMATTED_ADDRESS + " like ? )" //
@@ -202,90 +122,7 @@ public class ContactService {
 				, whereParameters //
 				, null //
 				);
-		Address address = null;
-		String contactId = null;
-		while (addrCur.moveToNext()) {
-			address = new Address();
-			address.setFormattedAddress(addrCur.getString(addrCur.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.FORMATTED_ADDRESS)));
-			contactId = addrCur.getString(addrCur.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.CONTACT_ID));
-			addrList = mapAdress.get(contactId);
-			if (addrList == null) {
-				addrList = new ArrayList<Address>();
-				mapAdress.put(contactId, addrList);
-			}
-			addrList.add(address);
-		}
-		addrCur.close();
-
-		String[] projection = new String[] { //
-		ContactsContract.Contacts._ID //
-				, ContactsContract.Contacts.DISPLAY_NAME //
-		};
-		StringBuilder selection = new StringBuilder(ContactsContract.Contacts._ID).append(" in (");
-		String[] selectionArg = new String[mapAdress.size()];
-		boolean first = true;
-		int i = 0;
-		for (String contactIdTmp : mapAdress.keySet()) {
-			if (!first) {
-				selection.append(",");
-			}
-			first = false;
-			selection./* append(contactId). */append("?");
-			selectionArg[i] = contactIdTmp;
-			i++;
-		}
-		selection.append(")");
-		return contentResolver.query(ContactsContract.Contacts.CONTENT_URI //
-				, projection //
-				, selection.toString() //
-				, selectionArg //
-				, null);
-
-	}
-
-	public static List<Contact> getContacts(ContentResolver contentResolver) {
-		List<Contact> contacts = new ArrayList<Contact>();
-
-		String[] projection = new String[] { //
-		ContactsContract.Contacts._ID //
-				, ContactsContract.Contacts.DISPLAY_NAME //
-		};
-		String selection = null;
-		String[] selectionArg = null;
-		Cursor cur = contentResolver.query(ContactsContract.Contacts.CONTENT_URI //
-				, projection //
-				, selection //
-				, selectionArg //
-				, null);
-		if (cur.getCount() > 0) {
-			Contact contactTmp = null;
-			while (cur.moveToNext()) {
-				contactTmp = getContact(cur, contentResolver);
-				if (contactTmp != null) {
-					contacts.add(contactTmp);
-				}
-			}
-		}
-
-		return contacts;
-
-	}
-
-	public static Cursor getContactsCursor(ContentResolver contentResolver) {
-		List<Contact> contacts = new ArrayList<Contact>();
-
-		String[] projection = new String[] { //
-		ContactsContract.Contacts._ID //
-				, ContactsContract.Contacts.DISPLAY_NAME //
-		};
-		String selection = null;
-		String[] selectionArg = null;
-		return contentResolver.query(ContactsContract.Contacts.CONTENT_URI //
-				, projection //
-				, selection //
-				, selectionArg //
-				, null);
-
+		return addrCur;
 	}
 
 	public static Contact getContact(Cursor cur, ContentResolver contentResolver) {
@@ -294,11 +131,24 @@ public class ContactService {
 		contact.setId(id);
 		contact.setDisplayName(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
 
-		contact.setPhotoBitmap(getPhotoStream(id, contentResolver));
-		contact.setPhone(getPhoneNumbers(id, contentResolver));
+		// contact.setPhotoBitmap(getPhotoStream(id, contentResolver));
+		// contact.setPhone(getPhoneNumbers(id, contentResolver));
 
-		contact.setEmail(getEmailAddresses(id, contentResolver));
-		contact.setAddresses(getContactAddresses(id, contentResolver));
+		// contact.setEmail(getEmailAddresses(id, contentResolver));
+		// contact.setAddresses(getContactAddresses(id, contentResolver));
+
+		return contact;
+	}
+
+	public static Contact getContactWithAdress(Cursor cur, ContentResolver contentResolver) {
+		Contact contact = new Contact();
+		String id = cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.CONTACT_ID));
+		contact.setId(id);
+		contact.setDisplayName(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
+		Adress adress = new Adress();
+		adress.setFormattedAddress(cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.FORMATTED_ADDRESS)));
+		contact.setAdress(adress);
+		contact.setPhotoBitmap(getPhotoStream(id, contentResolver));
 
 		return contact;
 	}
@@ -345,31 +195,6 @@ public class ContactService {
 		}
 		emailCur.close();
 		return emails;
-	}
-
-	private static ArrayList<Address> getContactAddresses(String id, ContentResolver contentResolver) {
-		ArrayList<Address> addrList = new ArrayList<Address>();
-
-		String where = ContactsContract.Data.CONTACT_ID + " = ? AND " + ContactsContract.Data.MIMETYPE + " = ?";
-		String[] whereParameters = new String[] { id, ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE };
-
-		Cursor addrCur = contentResolver.query(ContactsContract.Data.CONTENT_URI, null, where, whereParameters, null);
-		Address address = null;
-		while (addrCur.moveToNext()) {
-			address = new Address();
-			address.setPoBox(addrCur.getString(addrCur.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.POBOX)));
-			address.setStreet(addrCur.getString(addrCur.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.STREET)));
-			address.setCity(addrCur.getString(addrCur.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.CITY)));
-			address.setState(addrCur.getString(addrCur.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.REGION)));
-			address.setPostalCode(addrCur.getString(addrCur.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.POSTCODE)));
-			address.setCountry(addrCur.getString(addrCur.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.COUNTRY)));
-			address.setNeighborhood(addrCur.getString(addrCur.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.NEIGHBORHOOD)));
-			address.setFormattedAddress(addrCur.getString(addrCur.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.FORMATTED_ADDRESS)));
-			address.setType(addrCur.getInt(addrCur.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.TYPE)));
-			addrList.add(address);
-		}
-		addrCur.close();
-		return addrList;
 	}
 
 }
