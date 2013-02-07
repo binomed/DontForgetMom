@@ -87,13 +87,13 @@ public class DontForgetMomContactAdapter extends CursorAdapter implements Filter
 			return contact.getAdress().getFormatted_address();
 		case MAIL:
 			contact = ContactService.getContactWithEmail(cursor, this.contentResolver);
-			return contact.getEmail().getData();
+			return contact.getDisplayName() + "<" + contact.getEmail().getData() + ">";
 		case PHONE:
 			contact = ContactService.getContactWithPhoneNumber(cursor, this.contentResolver);
-			return contact.getPhone().getData();
+			return contact.getDisplayName() + "<" + contact.getPhone().getData() + ">";
 		case PHONE_MAIL:
 			contact = ContactService.getContactWithEmailOrPhone(cursor, this.contentResolver);
-			return contact.getPhone() != null ? contact.getPhone().getData() : contact.getEmail().getData();
+			return contact.getDisplayName() + "<" + (contact.getPhone() != null ? contact.getPhone().getData() : contact.getEmail().getData()) + ">";
 
 		default:
 			return null;

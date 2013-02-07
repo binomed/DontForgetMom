@@ -344,7 +344,7 @@
                 android:lines="1"
                 />
              -->
-            <AutoCompleteTextView
+            <MultiAutoCompleteTextView
                 android:id="@+id/recipients"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"

@@ -40,7 +40,7 @@ public class ContactService {
 				, projectionAdress //
 				, where //
 				, whereParameters //
-				, null //
+				, ContactsContract.CommonDataKinds.StructuredPostal.DISPLAY_NAME //
 				);
 		return addrCur;
 	}
@@ -67,7 +67,7 @@ public class ContactService {
 				, projectionPhone //
 				, where //
 				, whereParameters //
-				, null //
+				, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME //
 				);
 		return addrCur;
 	}
@@ -78,9 +78,9 @@ public class ContactService {
 		ContactsContract.CommonDataKinds.Email._ID, //
 				ContactsContract.CommonDataKinds.Email.ADDRESS, //
 				ContactsContract.CommonDataKinds.Email.CONTACT_ID, //
-				ContactsContract.CommonDataKinds.Email.DISPLAY_NAME //
+				ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME //
 		};
-		String where = "( " + ContactsContract.CommonDataKinds.Email.DISPLAY_NAME + " like ? " //
+		String where = "( " + ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " like ? " //
 				+ " OR " + ContactsContract.CommonDataKinds.Email.ADDRESS + " like ? )" //
 				+ " AND " + ContactsContract.Data.MIMETYPE + " = ?";
 		String[] whereParameters = new String[] { "%" + email + "%", "%" + email + "%", ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE };
@@ -94,7 +94,7 @@ public class ContactService {
 				, projectionEmail //
 				, where //
 				, whereParameters //
-				, null //
+				, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME //
 				);
 		return addrCur;
 	}
@@ -105,7 +105,7 @@ public class ContactService {
 		ContactsContract.CommonDataKinds.Email._ID, //
 				ContactsContract.CommonDataKinds.Email.ADDRESS, //
 				ContactsContract.CommonDataKinds.Email.CONTACT_ID, //
-				ContactsContract.CommonDataKinds.Email.DISPLAY_NAME //
+				ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME //
 		};
 		String[] projectionPhone = new String[] { //
 		ContactsContract.CommonDataKinds.Phone._ID, //
@@ -113,7 +113,7 @@ public class ContactService {
 				ContactsContract.CommonDataKinds.Phone.CONTACT_ID, //
 				ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME //
 		};
-		String whereEmail = "( " + ContactsContract.CommonDataKinds.Email.DISPLAY_NAME + " like ? " //
+		String whereEmail = "( " + ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " like ? " //
 				+ " OR " + ContactsContract.CommonDataKinds.Email.ADDRESS + " like ? )" //
 				+ " AND " + ContactsContract.Data.MIMETYPE + " = ?";
 		String[] whereEmailParameters = new String[] { "%" + text + "%", "%" + text + "%", ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE };
@@ -133,14 +133,14 @@ public class ContactService {
 				, projectionEmail //
 				, whereEmail //
 				, whereEmailParameters //
-				, null //
+				, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME //
 				);
 		Cursor phoneCur = contentResolver.query( //
 				ContactsContract.CommonDataKinds.Phone.CONTENT_URI //
 				, projectionPhone //
 				, wherePhone //
 				, wherePhoneParameters //
-				, null //
+				, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME //
 				);
 		return new MergeCursor(new Cursor[] { emailCur, phoneCur });
 	}
@@ -163,7 +163,7 @@ public class ContactService {
 		Contact contact = new Contact();
 		String id = cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID));
 		contact.setId(id);
-		contact.setDisplayName(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
+		contact.setDisplayName(cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)));
 		Phone phone = new Phone();
 		phone.setData(cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
 		contact.setPhone(phone);
@@ -175,7 +175,7 @@ public class ContactService {
 		Contact contact = new Contact();
 		String id = cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Email.CONTACT_ID));
 		contact.setId(id);
-		contact.setDisplayName(cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Email.DISPLAY_NAME)));
+		contact.setDisplayName(cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)));
 		Email email = new Email();
 		email.setData(cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA)));
 		contact.setEmail(email);
@@ -190,7 +190,7 @@ public class ContactService {
 		if (cur.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA) != -1) {
 			id = cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Email.CONTACT_ID));
 			contact.setId(id);
-			contact.setDisplayName(cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Email.DISPLAY_NAME)));
+			contact.setDisplayName(cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)));
 			Email email = new Email();
 			email.setData(cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA)));
 			contact.setEmail(email);

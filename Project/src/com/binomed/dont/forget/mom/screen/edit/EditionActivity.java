@@ -13,6 +13,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -64,7 +65,7 @@ public class EditionActivity extends AbstractActivity implements OnSeekBarChange
 	// @InjectView(R.id.btContactRecipient)
 	// ImageButton btContactRecipient;
 	@InjectView(R.id.recipients)
-	AutoCompleteTextView recipients;
+	MultiAutoCompleteTextView recipients;
 	@InjectView(R.id.messageContent)
 	EditText messageContent;
 
@@ -83,6 +84,9 @@ public class EditionActivity extends AbstractActivity implements OnSeekBarChange
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		timeFormat = android.text.format.DateFormat.getTimeFormat(this);
 		dateFormat = android.text.format.DateFormat.getDateFormat(this);
+
+		seekPrecision.setFocusable(true);
+		seekPrecision.setFocusableInTouchMode(true);
 
 		initDatas();
 		initListeners();
@@ -137,6 +141,7 @@ public class EditionActivity extends AbstractActivity implements OnSeekBarChange
 
 		placeEdit.setAdapter(adapterPlace);
 		recipients.setAdapter(adapterRecipent);
+		recipients.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 	}
 
 	@Override
@@ -206,6 +211,7 @@ public class EditionActivity extends AbstractActivity implements OnSeekBarChange
 
 	@Override
 	public void onStartTrackingTouch(SeekBar seekBar) {
+		seekPrecision.requestFocus();
 	}
 
 	@Override
