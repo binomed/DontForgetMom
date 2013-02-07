@@ -1,13 +1,11 @@
 package com.binomed.dont.forget.mom.service.contact;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.database.Cursor;
+import android.database.MergeCursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -19,84 +17,6 @@ import com.binomed.dont.forget.mom.model.Email;
 import com.binomed.dont.forget.mom.model.Phone;
 
 public class ContactService {
-
-	public static List<Contact> getContactsWithNumber(ContentResolver contentResolver, String number) {
-
-		HashMap<String, ArrayList<Phone>> mapPhones = new HashMap<String, ArrayList<Phone>>();
-		ArrayList<Phone> phones = null;
-		String[] projectionNumber = new String[] { //
-		ContactsContract.CommonDataKinds.Phone.CONTACT_ID//
-				, ContactsContract.CommonDataKinds.Phone.NUMBER //
-		};
-		String selectionNumber = ContactsContract.CommonDataKinds.Phone.NUMBER + " like ?";
-		String[] selectionArgsNumber = new String[] { number + "%" };
-		if (number == null || number.length() == 0) {
-			selectionArgsNumber = null;
-			selectionNumber = null;
-		}
-		Cursor pCur = contentResolver.query( //
-				ContactsContract.CommonDataKinds.Phone.CONTENT_URI //
-				, projectionNumber // projection
-				, selectionNumber // selection
-				, selectionArgsNumber // selectionArg
-				, null);
-
-		Phone phone = null;
-		String contactId = null;
-		while (pCur.moveToNext()) {
-			phone = new Phone();
-			phone.setData(pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
-			contactId = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID));
-			phones = mapPhones.get(contactId);
-			if (phones == null) {
-				phones = new ArrayList<Phone>();
-				mapPhones.put(contactId, phones);
-			}
-			phones.add(phone);
-
-		}
-		pCur.close();
-
-		List<Contact> contacts = new ArrayList<Contact>();
-
-		String[] projection = new String[] { //
-		ContactsContract.Contacts._ID //
-				, ContactsContract.Contacts.DISPLAY_NAME //
-		};
-		StringBuilder selection = new StringBuilder(ContactsContract.Contacts._ID).append(" in (");
-		String[] selectionArg = new String[mapPhones.size()];
-		boolean first = true;
-		int i = 0;
-		for (String contactIdTmp : mapPhones.keySet()) {
-			if (!first) {
-				selection.append(",");
-			}
-			first = false;
-			selection.append(contactId).append("?");
-			selectionArg[i] = contactIdTmp;
-			i++;
-		}
-		selection.append(")");
-		Cursor cur = contentResolver.query(ContactsContract.Contacts.CONTENT_URI //
-				, projection //
-				, selection.toString() //
-				, selectionArg //
-				, null);
-		if (cur.getCount() > 0) {
-			Contact contactTmp = null;
-			while (cur.moveToNext()) {
-				contactTmp = getContact(cur, contentResolver);
-				if (contactTmp != null) {
-					// contactTmp.setPhone(mapPhones.get(contactTmp.getId()));
-					contacts.add(contactTmp);
-
-				}
-			}
-		}
-
-		return contacts;
-
-	}
 
 	public static Cursor getContactsWithAdressCursor(ContentResolver contentResolver, String adress) {
 
@@ -125,19 +45,104 @@ public class ContactService {
 		return addrCur;
 	}
 
-	public static Contact getContact(Cursor cur, ContentResolver contentResolver) {
-		Contact contact = new Contact();
-		String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
-		contact.setId(id);
-		contact.setDisplayName(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
+	public static Cursor getContactsWithPhoneNumberCursor(ContentResolver contentResolver, String phoneNumber) {
 
-		// contact.setPhotoBitmap(getPhotoStream(id, contentResolver));
-		// contact.setPhone(getPhoneNumbers(id, contentResolver));
+		String[] projectionPhone = new String[] { //
+		ContactsContract.CommonDataKinds.Phone._ID, //
+				ContactsContract.CommonDataKinds.Phone.NUMBER, //
+				ContactsContract.CommonDataKinds.Phone.CONTACT_ID, //
+				ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME //
+		};
+		String where = "( " + ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " like ? " //
+				+ " OR " + ContactsContract.CommonDataKinds.Phone.NUMBER + " like ? )" //
+				+ " AND " + ContactsContract.Data.MIMETYPE + " = ?";
+		String[] whereParameters = new String[] { "%" + phoneNumber + "%", "%" + phoneNumber + "%", ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE };
+		if (phoneNumber == null || phoneNumber.length() == 0) {
+			where = ContactsContract.Data.MIMETYPE + " = ?";
+			whereParameters = new String[] { ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE };
+		}
 
-		// contact.setEmail(getEmailAddresses(id, contentResolver));
-		// contact.setAddresses(getContactAddresses(id, contentResolver));
+		Cursor addrCur = contentResolver.query( //
+				ContactsContract.CommonDataKinds.Phone.CONTENT_URI //
+				, projectionPhone //
+				, where //
+				, whereParameters //
+				, null //
+				);
+		return addrCur;
+	}
 
-		return contact;
+	public static Cursor getContactsWithEmailCursor(ContentResolver contentResolver, String email) {
+
+		String[] projectionEmail = new String[] { //
+		ContactsContract.CommonDataKinds.Email._ID, //
+				ContactsContract.CommonDataKinds.Email.ADDRESS, //
+				ContactsContract.CommonDataKinds.Email.CONTACT_ID, //
+				ContactsContract.CommonDataKinds.Email.DISPLAY_NAME //
+		};
+		String where = "( " + ContactsContract.CommonDataKinds.Email.DISPLAY_NAME + " like ? " //
+				+ " OR " + ContactsContract.CommonDataKinds.Email.ADDRESS + " like ? )" //
+				+ " AND " + ContactsContract.Data.MIMETYPE + " = ?";
+		String[] whereParameters = new String[] { "%" + email + "%", "%" + email + "%", ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE };
+		if (email == null || email.length() == 0) {
+			where = ContactsContract.Data.MIMETYPE + " = ?";
+			whereParameters = new String[] { ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE };
+		}
+
+		Cursor addrCur = contentResolver.query( //
+				ContactsContract.CommonDataKinds.Email.CONTENT_URI //
+				, projectionEmail //
+				, where //
+				, whereParameters //
+				, null //
+				);
+		return addrCur;
+	}
+
+	public static Cursor getContactsWithEmailAndPhoneCursor(ContentResolver contentResolver, String text) {
+
+		String[] projectionEmail = new String[] { //
+		ContactsContract.CommonDataKinds.Email._ID, //
+				ContactsContract.CommonDataKinds.Email.ADDRESS, //
+				ContactsContract.CommonDataKinds.Email.CONTACT_ID, //
+				ContactsContract.CommonDataKinds.Email.DISPLAY_NAME //
+		};
+		String[] projectionPhone = new String[] { //
+		ContactsContract.CommonDataKinds.Phone._ID, //
+				ContactsContract.CommonDataKinds.Phone.NUMBER, //
+				ContactsContract.CommonDataKinds.Phone.CONTACT_ID, //
+				ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME //
+		};
+		String whereEmail = "( " + ContactsContract.CommonDataKinds.Email.DISPLAY_NAME + " like ? " //
+				+ " OR " + ContactsContract.CommonDataKinds.Email.ADDRESS + " like ? )" //
+				+ " AND " + ContactsContract.Data.MIMETYPE + " = ?";
+		String[] whereEmailParameters = new String[] { "%" + text + "%", "%" + text + "%", ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE };
+		String wherePhone = "( " + ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " like ? " //
+				+ " OR " + ContactsContract.CommonDataKinds.Phone.NUMBER + " like ? )" //
+				+ " AND " + ContactsContract.Data.MIMETYPE + " = ?";
+		String[] wherePhoneParameters = new String[] { "%" + text + "%", "%" + text + "%", ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE };
+		if (text == null || text.length() == 0) {
+			whereEmail = ContactsContract.Data.MIMETYPE + " = ?";
+			whereEmailParameters = new String[] { ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE };
+			wherePhone = ContactsContract.Data.MIMETYPE + " = ?";
+			wherePhoneParameters = new String[] { ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE };
+		}
+
+		Cursor emailCur = contentResolver.query( //
+				ContactsContract.CommonDataKinds.Email.CONTENT_URI //
+				, projectionEmail //
+				, whereEmail //
+				, whereEmailParameters //
+				, null //
+				);
+		Cursor phoneCur = contentResolver.query( //
+				ContactsContract.CommonDataKinds.Phone.CONTENT_URI //
+				, projectionPhone //
+				, wherePhone //
+				, wherePhoneParameters //
+				, null //
+				);
+		return new MergeCursor(new Cursor[] { emailCur, phoneCur });
 	}
 
 	public static Contact getContactWithAdress(Cursor cur, ContentResolver contentResolver) {
@@ -153,21 +158,54 @@ public class ContactService {
 		return contact;
 	}
 
-	private static ArrayList<Phone> getPhoneNumbers(String id, ContentResolver contentResolver) {
-		ArrayList<Phone> phones = new ArrayList<Phone>();
+	public static Contact getContactWithPhoneNumber(Cursor cur, ContentResolver contentResolver) {
 
-		Cursor pCur = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[] { id }, null);
-		Phone phone = null;
-		while (pCur.moveToNext()) {
-			phone = new Phone();
-			phone.setData(pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
-			phone.setType(pCur.getInt(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE)));
-			phone.setLabel(pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.LABEL)));
-			phones.add(phone);
+		Contact contact = new Contact();
+		String id = cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID));
+		contact.setId(id);
+		contact.setDisplayName(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
+		Phone phone = new Phone();
+		phone.setData(cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+		contact.setPhone(phone);
+		contact.setPhotoBitmap(getPhotoStream(id, contentResolver));
+		return contact;
+	}
 
+	public static Contact getContactWithEmail(Cursor cur, ContentResolver contentResolver) {
+		Contact contact = new Contact();
+		String id = cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Email.CONTACT_ID));
+		contact.setId(id);
+		contact.setDisplayName(cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Email.DISPLAY_NAME)));
+		Email email = new Email();
+		email.setData(cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA)));
+		contact.setEmail(email);
+		contact.setPhotoBitmap(getPhotoStream(id, contentResolver));
+		return contact;
+	}
+
+	public static Contact getContactWithEmailOrPhone(Cursor cur, ContentResolver contentResolver) {
+		Contact contact = new Contact();
+		String id = null;
+
+		if (cur.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA) != -1) {
+			id = cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Email.CONTACT_ID));
+			contact.setId(id);
+			contact.setDisplayName(cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Email.DISPLAY_NAME)));
+			Email email = new Email();
+			email.setData(cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA)));
+			contact.setEmail(email);
 		}
-		pCur.close();
-		return phones;
+
+		if (cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER) != -1) {
+			id = cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID));
+			contact.setId(id);
+			contact.setDisplayName(cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)));
+			Phone phone = new Phone();
+			phone.setData(cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+			contact.setPhone(phone);
+		}
+		contact.setPhotoBitmap(getPhotoStream(id, contentResolver));
+		return contact;
 	}
 
 	private static Bitmap getPhotoStream(String id, ContentResolver contentResolver) {
@@ -178,23 +216,6 @@ public class ContactService {
 			result = BitmapFactory.decodeStream(stream);
 		}
 		return result;
-	}
-
-	private static ArrayList<Email> getEmailAddresses(String id, ContentResolver contentResolver) {
-		ArrayList<Email> emails = new ArrayList<Email>();
-
-		Cursor emailCur = contentResolver.query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, null, ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = ?", new String[] { id }, null);
-		Email email = null;
-		while (emailCur.moveToNext()) {
-			// This would allow you get several email addresses
-			email = new Email();
-			email.setData(emailCur.getString(emailCur.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA)));
-			email.setType(emailCur.getInt(emailCur.getColumnIndex(ContactsContract.CommonDataKinds.Email.TYPE)));
-			email.setLabel(emailCur.getString(emailCur.getColumnIndex(ContactsContract.CommonDataKinds.Email.LABEL)));
-			emails.add(email);
-		}
-		emailCur.close();
-		return emails;
 	}
 
 }

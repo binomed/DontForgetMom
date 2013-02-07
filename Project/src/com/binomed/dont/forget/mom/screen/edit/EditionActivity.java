@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -32,7 +33,7 @@ import com.binomed.dont.forget.mom.dialog.TimeDialogFragment;
 import com.binomed.dont.forget.mom.service.contact.ContactService;
 import com.binomed.dont.forget.mom.utils.AbstractActivity;
 
-public class EditionActivity extends AbstractActivity implements OnSeekBarChangeListener {
+public class EditionActivity extends AbstractActivity implements OnSeekBarChangeListener, OnCheckedChangeListener {
 
 	public static final int ITEM_SAVE = 3;
 
@@ -83,12 +84,13 @@ public class EditionActivity extends AbstractActivity implements OnSeekBarChange
 		timeFormat = android.text.format.DateFormat.getTimeFormat(this);
 		dateFormat = android.text.format.DateFormat.getDateFormat(this);
 
-		initListeners();
 		initDatas();
+		initListeners();
 	}
 
 	private void initListeners() {
 		seekPrecision.setOnSeekBarChangeListener(this);
+		radioGroupAlert.setOnCheckedChangeListener(this);
 	}
 
 	private void initDatas() {
@@ -128,13 +130,13 @@ public class EditionActivity extends AbstractActivity implements OnSeekBarChange
 				ContactService.getContactsWithAdressCursor(getContentResolver(), null),//
 				TypeDatas.ADRESS//
 		);
-		// adapterRecipent = new DontForgetMomContactAdapter(this, //
-		// ContactService.getContactsWithAdressCursor(getContentResolver(), null),//
-		// TypeDatas.PHONE//
-		// );
+		adapterRecipent = new DontForgetMomContactAdapter(this, //
+				ContactService.getContactsWithPhoneNumberCursor(getContentResolver(), null),//
+				TypeDatas.PHONE//
+		);
 
 		placeEdit.setAdapter(adapterPlace);
-		// recipients.setAdapter(adapterRecipent);
+		recipients.setAdapter(adapterRecipent);
 	}
 
 	@Override
@@ -208,6 +210,25 @@ public class EditionActivity extends AbstractActivity implements OnSeekBarChange
 
 	@Override
 	public void onStopTrackingTouch(SeekBar seekBar) {
+	}
+
+	@Override
+	public void onCheckedChanged(RadioGroup group, int checkedId) {
+		switch (checkedId) {
+		case R.id.alertSMS:
+		case R.id.alertPhone:
+			adapterRecipent.setType(TypeDatas.PHONE);
+			break;
+		case R.id.alertMail:
+			adapterRecipent.setType(TypeDatas.MAIL);
+			break;
+		case R.id.alertMailSMS:
+			adapterRecipent.setType(TypeDatas.PHONE_MAIL);
+			break;
+		default:
+			break;
+		}
+
 	}
 
 }
