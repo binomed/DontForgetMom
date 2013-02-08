@@ -19,8 +19,8 @@
     android:layout_height="fill_parent" >
 
 <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         >
 
     	<TextView
@@ -98,37 +98,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip" 
             >
-            <!-- 
-            <ImageButton
-                android:id="@+id/btnMap"
-                android:layout_marginRight="10dip"
-                android:layout_alignParentRight="true"
-                android:layout_width="wrap_content" 
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_location_map" 
-                android:onClick="onClick"
-                />
-            <ImageButton
-                android:id="@+id/btnContactPlace"
-                android:layout_width="wrap_content" 
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/btnMap"
-                android:layout_marginRight="5dip"
-                android:src="@drawable/ic_social_add_person"
-                android:onClick="onClick" 
-                />
-            <AutoCompleteTextView
-                android:id="@+id/placeEdit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dip"
-                android:layout_marginLeft="10dip"
-                android:layout_toLeftOf="@+id/btnContactPlace"
-                android:layout_gravity="center_vertical"
-                android:inputType="text"
-                android:lines="1"
-                />
-             -->
             <AutoCompleteTextView
                 android:id="@+id/placeEdit"
                 android:layout_width="fill_parent"
@@ -322,28 +291,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip" 
             >
-            <!-- 
-            <ImageButton
-                android:id="@+id/btContactRecipient"
-                android:layout_marginRight="10dip"
-                android:layout_alignParentRight="true"
-                android:layout_width="wrap_content" 
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_social_add_person" 
-                android:onClick="onClick"
-                />
-            <EditText
-                android:id="@+id/recipients"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dip"
-                android:layout_marginLeft="10dip"
-                android:layout_toLeftOf="@+id/btContactRecipient"
-                android:layout_gravity="center_vertical"
-                android:inputType="text"
-                android:lines="1"
-                />
-             -->
             <MultiAutoCompleteTextView
                 android:id="@+id/recipients"
                 android:layout_width="fill_parent"

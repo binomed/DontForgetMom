@@ -25,7 +25,7 @@ public class DontForgetMomContentProvider extends ContentProvider {
 	private static final String CONTENT_PROVIDER_MIME = "vnd.com.bibomed.dont.forget.mom.db";
 	private static final String BASE_PATH = "dontforgetmomprovider";
 
-	// URI de notre content provider, elle sera utilisé pour accéder au ContentProvider
+	// URI de notre content provider, elle sera utilisï¿½ pour accï¿½der au ContentProvider
 	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
 
 	public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/trips";
@@ -78,12 +78,12 @@ public class DontForgetMomContentProvider extends ContentProvider {
 			if (TextUtils.isEmpty(selection)) {
 				rowsUpdated = sqlDB.update(DontForgetMomDbInformation.Trip.CONTENT_PROVIDER_TABLE_NAME, //
 						values,//
-						DontForgetMomDbInformation.Trip.TRIP_ID + "=" + id,//
+						DontForgetMomDbInformation.Trip._ID + "=" + id,//
 						null);
 			} else {
 				rowsUpdated = sqlDB.update(DontForgetMomDbInformation.Trip.CONTENT_PROVIDER_TABLE_NAME, //
 						values, //
-						DontForgetMomDbInformation.Trip.TRIP_ID + "=" + id //
+						DontForgetMomDbInformation.Trip._ID + "=" + id //
 								+ " and " //
 								+ selection, //
 						selectionArgs);
@@ -112,11 +112,11 @@ public class DontForgetMomContentProvider extends ContentProvider {
 			String id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
 				rowsDeleted = sqlDB.delete(DontForgetMomDbInformation.Trip.CONTENT_PROVIDER_TABLE_NAME, //
-						DontForgetMomDbInformation.Trip.TRIP_ID + "=" + id, //
+						DontForgetMomDbInformation.Trip._ID + "=" + id, //
 						null);
 			} else {
 				rowsDeleted = sqlDB.delete(DontForgetMomDbInformation.Trip.CONTENT_PROVIDER_TABLE_NAME, //
-						DontForgetMomDbInformation.Trip.TRIP_ID + "=" + id + " and " + selection, //
+						DontForgetMomDbInformation.Trip._ID + "=" + id + " and " + selection, //
 						selectionArgs);
 			}
 			break;
@@ -144,7 +144,7 @@ public class DontForgetMomContentProvider extends ContentProvider {
 			break;
 		case TRIP_ID:
 			// Adding the ID to the original query
-			queryBuilder.appendWhere(DontForgetMomDbInformation.Trip.TRIP_ID + "=" + uri.getLastPathSegment());
+			queryBuilder.appendWhere(DontForgetMomDbInformation.Trip._ID + "=" + uri.getLastPathSegment());
 			break;
 		default:
 			throw new IllegalArgumentException("Unknown URI: " + uri);
@@ -159,7 +159,7 @@ public class DontForgetMomContentProvider extends ContentProvider {
 	}
 
 	private void checkColumns(String[] projection) {
-		String[] available = { DontForgetMomDbInformation.Trip.TRIP_ID,//
+		String[] available = { DontForgetMomDbInformation.Trip._ID,//
 				DontForgetMomDbInformation.Trip.TRIP_DAY,//
 				DontForgetMomDbInformation.Trip.TRIP_HOUR,//
 				DontForgetMomDbInformation.Trip.TRIP_LAST_LAUNCH,//

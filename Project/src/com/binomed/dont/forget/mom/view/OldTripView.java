@@ -47,6 +47,7 @@ public class OldTripView extends RelativeLayout implements OnClickListener, OnAc
 	private static final int ACTION_DUPLICATE = 2;
 	private static final int ACTION_VIEW = 3;
 
+	private int tripId;
 	private final DateFormat format;
 	private final QuickAction quickAction;
 
@@ -73,9 +74,14 @@ public class OldTripView extends RelativeLayout implements OnClickListener, OnAc
 		actionOldTrip.setOnClickListener(this);
 	}
 
-	public void setTrip(String tripName, Date launch) {
+	public void setTrip(int tripId, String tripName, Date launch) {
+		this.tripId = tripId;
 		oldTripName.setText(tripName);
-		oldTripLaunch.setText(format.format(launch));
+		if (launch != null) {
+			oldTripLaunch.setText(format.format(launch));
+		} else {
+			// TODO gerer le cas des nons lancements
+		}
 
 	}
 

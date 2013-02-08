@@ -8,9 +8,9 @@ import com.binomed.dont.forget.mom.db.DontForgetMomDbInformation.Trip;
 
 public class DontForgetMomDbHelper extends SQLiteOpenHelper {
 
-	// Nom de notre base de données
+	// Nom de notre base de donnï¿½es
 	private static final String CONTENT_PROVIDER_DB_NAME = "dontforgetmom.db";
-	// Version de notre base de données
+	// Version de notre base de donnï¿½es
 	private static final int CONTENT_PROVIDER_DB_VERSION = 1;
 
 	public DontForgetMomDbHelper(Context context) {
@@ -20,7 +20,7 @@ public class DontForgetMomDbHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE " + Trip.CONTENT_PROVIDER_TABLE_NAME + " ("//
-				+ Trip.TRIP_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," //
+				+ Trip._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," //
 				+ Trip.TRIP_NAME + " VARCHAR(255)," //
 				+ Trip.TRIP_PLACE + " VARCHAR(255)," //
 				+ Trip.TRIP_DAY + " LONG," //
@@ -33,7 +33,7 @@ public class DontForgetMomDbHelper extends SQLiteOpenHelper {
 				+ ");");
 	}
 
-	// Cette méthode sert à gérer la montée de version de notre base
+	// Cette mï¿½thode sert ï¿½ gï¿½rer la montï¿½e de version de notre base
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		db.execSQL("DROP TABLE IF EXISTS " + Trip.CONTENT_PROVIDER_TABLE_NAME);

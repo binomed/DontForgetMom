@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.binomed.dont.forget.mom.R;
+import com.binomed.dont.forget.mom.adapter.OldTripAdapter;
+import com.binomed.dont.forget.mom.db.DontForgetMomContentProvider;
 import com.binomed.dont.forget.mom.utils.RoboSherlockListFragment;
 
 public class OldTripsFragment extends RoboSherlockListFragment {
@@ -27,9 +29,15 @@ public class OldTripsFragment extends RoboSherlockListFragment {
 		// emptyView.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
 		// ((ListView) mainView.findViewById(android.R.id.list)).setEmptyView(inflater.inflate(R.layout.view_empty_trips, container));
 		((ListView) mainView.findViewById(android.R.id.list)).setEmptyView(mainView.findViewById(android.R.id.empty));
-
 		return mainView;
+	}
 
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		getListView().setAdapter(new OldTripAdapter(getActivity() //
+				, getActivity().getContentResolver().query(DontForgetMomContentProvider.CONTENT_URI, null, null, null, null) //
+				, false));
 	}
 
 	@Override

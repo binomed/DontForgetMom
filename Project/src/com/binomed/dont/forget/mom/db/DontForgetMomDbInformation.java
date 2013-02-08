@@ -15,7 +15,6 @@ public class DontForgetMomDbInformation {
 		// Nom de la table de notre base
 		public static final String CONTENT_PROVIDER_TABLE_NAME = "trip";
 
-		public static final String TRIP_ID = "TRIP";
 		public static final String TRIP_NAME = "TRIP_NAME";
 		public static final String TRIP_PLACE = "TRIP_PLACE";
 		public static final String TRIP_DAY = "TRIP_DAY";
