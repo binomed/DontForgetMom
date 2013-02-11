@@ -51,7 +51,9 @@ public class ContactService {
 		ContactsContract.CommonDataKinds.Phone._ID, //
 				ContactsContract.CommonDataKinds.Phone.NUMBER, //
 				ContactsContract.CommonDataKinds.Phone.CONTACT_ID, //
-				ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME //
+				ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, //
+				ContactsContract.CommonDataKinds.Phone.LABEL, //
+				ContactsContract.CommonDataKinds.Phone.TYPE //
 		};
 		String where = "( " + ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " like ? " //
 				+ " OR " + ContactsContract.CommonDataKinds.Phone.NUMBER + " like ? )" //
@@ -111,7 +113,9 @@ public class ContactService {
 		ContactsContract.CommonDataKinds.Phone._ID, //
 				ContactsContract.CommonDataKinds.Phone.NUMBER, //
 				ContactsContract.CommonDataKinds.Phone.CONTACT_ID, //
-				ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME //
+				ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, //
+				ContactsContract.CommonDataKinds.Phone.LABEL, //
+				ContactsContract.CommonDataKinds.Phone.TYPE //
 		};
 		String whereEmail = "( " + ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " like ? " //
 				+ " OR " + ContactsContract.CommonDataKinds.Email.ADDRESS + " like ? )" //
@@ -166,6 +170,8 @@ public class ContactService {
 		contact.setDisplayName(cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)));
 		Phone phone = new Phone();
 		phone.setData(cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+		phone.setType(cur.getInt(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE)));
+		phone.setLabel(cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.LABEL)));
 		contact.setPhone(phone);
 		contact.setPhotoBitmap(getPhotoStream(id, contentResolver));
 		return contact;
@@ -202,6 +208,8 @@ public class ContactService {
 			contact.setDisplayName(cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)));
 			Phone phone = new Phone();
 			phone.setData(cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+			phone.setType(cur.getInt(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE)));
+			phone.setLabel(cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.LABEL)));
 			contact.setPhone(phone);
 		}
 		contact.setPhotoBitmap(getPhotoStream(id, contentResolver));

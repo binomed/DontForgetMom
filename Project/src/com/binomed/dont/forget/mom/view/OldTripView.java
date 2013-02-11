@@ -8,7 +8,6 @@ import net.londatiga.android.QuickAction;
 import net.londatiga.android.QuickAction.OnActionItemClickListener;
 import roboguice.RoboGuice;
 import roboguice.inject.InjectResource;
-import roboguice.inject.InjectView;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -22,11 +21,8 @@ import com.binomed.dont.forget.mom.R;
 
 public class OldTripView extends RelativeLayout implements OnClickListener, OnActionItemClickListener {
 
-	@InjectView(R.id.actionOldTrip)
 	ImageView actionOldTrip;
-	@InjectView(R.id.oldTripName)
 	TextView oldTripName;
-	@InjectView(R.id.oldTripLaunch)
 	TextView oldTripLaunch;
 
 	/* Resources */
@@ -69,6 +65,13 @@ public class OldTripView extends RelativeLayout implements OnClickListener, OnAc
 		quickAction.addActionItem(duplicateActionItem);
 		quickAction.addActionItem(viewActionItem);
 		quickAction.setOnActionItemClickListener(this);
+
+		// @InjectView(R.id.actionOldTrip)
+		actionOldTrip = (ImageView) findViewById(R.id.actionOldTrip);
+		// @InjectView(R.id.oldTripName)
+		oldTripName = (TextView) findViewById(R.id.oldTripName);
+		// @InjectView(R.id.oldTripLaunch)
+		oldTripLaunch = (TextView) findViewById(R.id.oldTripLaunch);
 
 		// Init listener
 		actionOldTrip.setOnClickListener(this);

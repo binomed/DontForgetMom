@@ -3,6 +3,7 @@ package com.binomed.dont.forget.mom.adapter;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.support.v4.widget.CursorAdapter;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ public class DontForgetMomContactAdapter extends CursorAdapter implements Filter
 
 	private final ContentResolver contentResolver;
 	private TypeDatas type;
+	private Context context;
 
 	public void setType(TypeDatas type) {
 		this.type = type;
@@ -26,6 +28,7 @@ public class DontForgetMomContactAdapter extends CursorAdapter implements Filter
 		super(context, c, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 		contentResolver = context.getContentResolver();
 		this.type = type;
+		this.context = context;
 	}
 
 	@Override
@@ -55,7 +58,8 @@ public class DontForgetMomContactAdapter extends CursorAdapter implements Filter
 			break;
 		case PHONE:
 			contact = ContactService.getContactWithPhoneNumber(cursor, this.contentResolver);
-			detail = contact.getPhone().getData();
+
+			detail = contact.getPhone().getData() + " - " + Phone.getTypeLabel(context.getResources(), contact.getPhone().getType(), contact.getPhone().getLabel());// contact.getPhone().getLabel();
 
 			break;
 		case PHONE_MAIL:
