@@ -15,6 +15,7 @@
     <string name="old_action_replay">Replay</string>
     <string name="old_action_duplicate">Duplicate</string>
     <string name="old_action_view">View</string>    
+    <string name="trip_never_launch">Trip never launch</string>    
     <!-- current Trips  -->
     <string name="toggleBtnOn">ON</string>
     <string name="toggleBtnOff">OFF</string>

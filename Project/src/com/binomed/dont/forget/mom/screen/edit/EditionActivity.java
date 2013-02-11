@@ -130,6 +130,22 @@ public class EditionActivity extends AbstractActivity //
 		}
 
 		if (cursorTrip != null && cursorTrip.moveToFirst()) {
+			tripNameTxt.setText(cursorTrip.getString(cursorTrip.getColumnIndex(Trip.TRIP_NAME)));
+			placeEdit.setText(cursorTrip.getString(cursorTrip.getColumnIndex(Trip.TRIP_PLACE)));
+			Date today = new Date(cursorTrip.getLong(cursorTrip.getColumnIndex(Trip.TRIP_DAY)));
+			btnDate.setText(dateFormat.format(today));
+			long hour = cursorTrip.getLong(cursorTrip.getColumnIndex(Trip.TRIP_HOUR));
+			if (hour != -1) {
+				today = new Date(hour);
+				btnHour.setText(timeFormat.format(today));
+			}
+			int precision = cursorTrip.getInt(cursorTrip.getColumnIndex(Trip.TRIP_PRECISION));
+			seekPrecision.setProgress(precision);
+			showPrecision(precision);
+			recipients.setText(cursorTrip.getString(cursorTrip.getColumnIndex(Trip.TRIP_RECIPIENT)));
+			messageContent.setText(cursorTrip.getString(cursorTrip.getColumnIndex(Trip.TRIP_MESSAGE)));
+
+			cursorTrip.close();
 		} else {
 			tripNameTxt.setText("");
 			placeEdit.setText("");
@@ -137,7 +153,7 @@ public class EditionActivity extends AbstractActivity //
 			btnDate.setText(dateFormat.format(today));
 			btnHour.setText(timeFormat.format(today));
 			seekPrecision.setProgress(50);
-			lblPrecision.setText(R.string.tripPrecisionMiddle);
+			showPrecision(50);
 			alertSMS.setChecked(true);
 			recipients.setText("");
 			messageContent.setText("");
@@ -281,6 +297,10 @@ public class EditionActivity extends AbstractActivity //
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 		lblPrecision.requestFocus();
+		showPrecision(progress);
+	}
+
+	private void showPrecision(int progress) {
 		if (progress < 33) {
 			lblPrecision.setText(R.string.tripPrecisionMHigh);
 		} else if (progress < 66) {
