@@ -11,10 +11,10 @@ import com.actionbarsherlock.view.MenuItem;
 import com.binomed.dont.forget.mom.R;
 import com.binomed.dont.forget.mom.adapter.DontForgetMomPagerAdapter;
 import com.binomed.dont.forget.mom.screen.edit.EditionActivity;
-import com.binomed.dont.forget.mom.utils.AbstractActivity;
+import com.binomed.dont.forget.mom.utils.AbstractDontForgetMomActivity;
 import com.viewpagerindicator.TabPageIndicator;
 
-public class TripsActivity extends AbstractActivity {
+public class TripsActivity extends AbstractDontForgetMomActivity {
 
 	@InjectView(R.id.pager)
 	ViewPager viewPager;
@@ -35,7 +35,7 @@ public class TripsActivity extends AbstractActivity {
 		setContentView(R.layout.activity_trips);
 
 		actionBar = getSupportActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(false);
 
 		adapter = new DontForgetMomPagerAdapter(getSupportFragmentManager(), this);
 		viewPager.setAdapter(adapter);

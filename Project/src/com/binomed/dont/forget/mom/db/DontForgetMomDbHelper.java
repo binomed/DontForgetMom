@@ -11,7 +11,7 @@ public class DontForgetMomDbHelper extends SQLiteOpenHelper {
 	// Nom de notre base de donn�es
 	private static final String CONTENT_PROVIDER_DB_NAME = "dontforgetmom.db";
 	// Version de notre base de donn�es
-	private static final int CONTENT_PROVIDER_DB_VERSION = 1;
+	private static final int CONTENT_PROVIDER_DB_VERSION = 2;
 
 	public DontForgetMomDbHelper(Context context) {
 		super(context, DontForgetMomDbHelper.CONTENT_PROVIDER_DB_NAME, null, DontForgetMomDbHelper.CONTENT_PROVIDER_DB_VERSION);
@@ -24,7 +24,6 @@ public class DontForgetMomDbHelper extends SQLiteOpenHelper {
 				+ Trip.TRIP_NAME + " VARCHAR(255)," //
 				+ Trip.TRIP_PLACE + " VARCHAR(255)," //
 				+ Trip.TRIP_DAY + " LONG," //
-				+ Trip.TRIP_HOUR + " LONG," //
 				+ Trip.TRIP_PRECISION + " INTEGER," //
 				+ Trip.TRIP_TYPE_ALERT + " INTEGER," //
 				+ Trip.TRIP_RECIPIENT + " VARCHAR(255)," //
