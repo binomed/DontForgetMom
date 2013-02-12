@@ -11,4 +11,6 @@ public final class DontForgetMomCst {
 	public static final int PRECISION_NORMAL = 1;
 	public static final int PRECISION_LOW = 2;
 
+	public static final String INTENT_DUPLICATE = "com.binomed.dont.forget.mom.intent.duplicate";
+
 }

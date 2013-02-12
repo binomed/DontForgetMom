@@ -9,6 +9,7 @@ import net.londatiga.android.QuickAction.OnActionItemClickListener;
 import roboguice.RoboGuice;
 import roboguice.inject.InjectResource;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +17,12 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.binomed.dont.forget.mom.R;
+import com.binomed.dont.forget.mom.db.DontForgetMomDbInformation.Trip;
+import com.binomed.dont.forget.mom.screen.edit.EditionActivity;
+import com.binomed.dont.forget.mom.utils.DontForgetMomCst;
 
 public class OldTripView extends RelativeLayout implements OnClickListener, OnActionItemClickListener {
 
@@ -83,7 +88,7 @@ public class OldTripView extends RelativeLayout implements OnClickListener, OnAc
 		if (launch != null) {
 			oldTripLaunch.setText(format.format(launch));
 		} else {
-			// TODO gerer le cas des nons lancements
+			oldTripLaunch.setText(R.string.trip_never_launch);
 		}
 
 	}
@@ -96,7 +101,29 @@ public class OldTripView extends RelativeLayout implements OnClickListener, OnAc
 
 	@Override
 	public void onItemClick(QuickAction source, int pos, int actionId) {
-		// TODO Auto-generated method stub
+		switch (actionId) {
+		case ACTION_DUPLICATE:
+			Intent duplicateIntent = new Intent(getContext(), EditionActivity.class);
+			duplicateIntent.putExtra(DontForgetMomCst.INTENT_DUPLICATE, true);
+			duplicateIntent.putExtra(Trip._ID, tripId);
+			getContext().startActivity(duplicateIntent);
+			// Toast.makeText(getContext(), "Duplicate", Toast.LENGTH_LONG);
+			break;
+		case ACTION_REPLAY:
+			Toast.makeText(getContext(), "Replay", Toast.LENGTH_LONG);
+
+			break;
+		case ACTION_VIEW:
+			Intent viewIntent = new Intent(getContext(), EditionActivity.class);
+			viewIntent.putExtra(DontForgetMomCst.INTENT_DUPLICATE, true);
+			viewIntent.putExtra(Trip._ID, tripId);
+			getContext().startActivity(viewIntent);
+
+			break;
+
+		default:
+			break;
+		}
 
 	}
 
