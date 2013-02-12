@@ -34,23 +34,6 @@
             android:background="#EEEEEE"
             android:text="@string/tripInformation"
             android:textAppearance="?android:attr/textAppearanceLarge" />
-        <TextView
-            android:id="@+id/tripName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dip"
-            android:layout_marginTop="10dip"
-            android:layout_below="@+id/information"
-            android:text="@string/tripName"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-        <ImageView 
-            android:id="@+id/separatorTripName"
-            android:layout_width="fill_parent"
-            android:layout_height="2dip"
-            android:layout_marginTop="2dip"
-            android:layout_below="@+id/tripName"
-            android:src="@drawable/horizontal_line"
-            />
          <EditText
                 android:id="@+id/tripNameTxt"
                 android:layout_width="fill_parent"
@@ -58,8 +41,9 @@
                 android:layout_marginRight="10dip"
                 android:layout_marginTop="10dip"
                 android:layout_marginLeft="10dip"
-                android:layout_below="@+id/separatorTripName"
+                android:layout_below="@+id/information"
                 android:inputType="text"
+                android:hint="@string/tripName"
                 android:lines="1"
                 
                 />
@@ -74,48 +58,26 @@
             android:background="#EEEEEE"
             android:text="@string/tripDestination"
             android:textAppearance="?android:attr/textAppearanceLarge" />
-        <TextView
-            android:id="@+id/place"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dip"
-            android:layout_marginTop="10dip"
-            android:layout_below="@+id/destination"
-            android:text="@string/tripPlace"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-        <ImageView 
-            android:id="@+id/separatorPlace"
-            android:layout_width="fill_parent"
-            android:layout_height="2dip"
-            android:layout_marginTop="2dip"
-            android:layout_below="@+id/place"
-            android:src="@drawable/horizontal_line"
-            />
-        <RelativeLayout
-            android:id="@+id/layoutPlace"
-            android:layout_below="@+id/separatorPlace"
-            android:layout_width="fill_parent" 
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dip" 
-            >
-            <AutoCompleteTextView
-                android:id="@+id/placeEdit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dip"
-                android:layout_marginLeft="10dip"
-                android:layout_gravity="center_vertical"
-                android:inputType="text"
-                android:lines="1"
-                />
-        </RelativeLayout>
+          <AutoCompleteTextView
+              android:id="@+id/placeEdit"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+           	  android:layout_marginTop="10dip" 
+              android:layout_marginRight="10dip"
+              android:layout_marginLeft="10dip"
+              android:layout_gravity="center_vertical"
+              android:layout_below="@+id/destination"
+              android:inputType="text"
+              android:hint="@string/tripDestination"
+              android:lines="1"
+              />
          <TextView
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dip"
             android:layout_marginTop="10dip"
-            android:layout_below="@+id/layoutPlace"
+            android:layout_below="@+id/placeEdit"
             android:text="@string/tripDate"
             android:textAppearance="?android:attr/textAppearanceLarge" />
         <ImageView 
@@ -267,65 +229,27 @@
 	             android:text="@string/tripKAlertPhone"
                 />
         </RadioGroup>
-         <TextView
-            android:id="@+id/alertRecipientTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dip"
-            android:layout_marginTop="10dip"
+           <MultiAutoCompleteTextView
+               android:id="@+id/recipients"
+               android:layout_width="fill_parent"
+               android:layout_height="wrap_content"
             android:layout_below="@+id/radioGroupAlert"
-            android:text="@string/tripAlertTo"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-        <ImageView 
-            android:id="@+id/separatorAlertRecipient"
-            android:layout_width="fill_parent"
-            android:layout_height="2dip"
-            android:layout_marginTop="2dip"
-            android:layout_below="@+id/alertRecipientTxt"
-            android:src="@drawable/horizontal_line"
-            />
-         <RelativeLayout
-            android:id="@+id/layoutRecipient"
-            android:layout_below="@+id/separatorAlertRecipient"
-            android:layout_width="fill_parent" 
-            android:layout_height="wrap_content"
             android:layout_marginTop="10dip" 
-            >
-            <MultiAutoCompleteTextView
-                android:id="@+id/recipients"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dip"
-                android:layout_marginLeft="10dip"
-                android:layout_gravity="center_vertical"
-                android:inputType="text"
-                android:lines="1"
-                />
-        </RelativeLayout>
-         <TextView
-            android:id="@+id/contentMessageTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dip"
-            android:layout_marginTop="10dip"
-            android:layout_below="@+id/layoutRecipient"
-            android:text="@string/tripAlertContent"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-        <ImageView 
-            android:id="@+id/separatorContentMessage"
-            android:layout_width="fill_parent"
-            android:layout_height="2dip"
-            android:layout_marginTop="2dip"
-            android:layout_below="@+id/contentMessageTxt"
-            android:src="@drawable/horizontal_line"
-            />
+               android:layout_marginRight="10dip"
+               android:layout_marginLeft="10dip"
+               android:layout_gravity="center_vertical"
+               android:inputType="text"
+               android:hint="@string/tripAlertTo"
+               android:lines="1"
+               />
 
         <EditText
             android:id="@+id/messageContent"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip"
-            android:layout_below="@+id/separatorContentMessage"
+            android:layout_below="@+id/recipients"
+            android:hint="@string/tripAlertContent"
             android:inputType="textMultiLine" >
 
         </EditText>
