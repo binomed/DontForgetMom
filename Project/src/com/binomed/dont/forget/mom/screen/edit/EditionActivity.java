@@ -10,11 +10,9 @@ import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
@@ -36,12 +34,11 @@ import com.binomed.dont.forget.mom.db.DontForgetMomContentProvider;
 import com.binomed.dont.forget.mom.db.DontForgetMomDbInformation;
 import com.binomed.dont.forget.mom.db.DontForgetMomDbInformation.Trip;
 import com.binomed.dont.forget.mom.dialog.DateDialogFragment;
-import com.binomed.dont.forget.mom.dialog.TimeDialogFragment;
 import com.binomed.dont.forget.mom.service.contact.ContactService;
-import com.binomed.dont.forget.mom.utils.AbstractActivity;
+import com.binomed.dont.forget.mom.utils.AbstractDontForgetMomActivity;
 import com.binomed.dont.forget.mom.utils.DontForgetMomCst;
 
-public class EditionActivity extends AbstractActivity //
+public class EditionActivity extends AbstractDontForgetMomActivity //
 		implements OnSeekBarChangeListener //
 		, OnCheckedChangeListener //
 		, DatePickerDialog.OnDateSetListener //
@@ -56,10 +53,6 @@ public class EditionActivity extends AbstractActivity //
 	AutoCompleteTextView placeEdit;
 	@InjectView(R.id.btnDate)
 	Button btnDate;
-	@InjectView(R.id.btnHour)
-	Button btnHour;
-	@InjectView(R.id.departHour)
-	CheckBox departHour;
 	@InjectView(R.id.seekPrecision)
 	SeekBar seekPrecision;
 	@InjectView(R.id.lblPrecision)
@@ -94,7 +87,7 @@ public class EditionActivity extends AbstractActivity //
 		setContentView(R.layout.activity_new);
 
 		ActionBar actionBar = getSupportActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(false);
 		timeFormat = android.text.format.DateFormat.getTimeFormat(this);
 		dateFormat = android.text.format.DateFormat.getDateFormat(this);
 
@@ -134,11 +127,6 @@ public class EditionActivity extends AbstractActivity //
 			placeEdit.setText(cursorTrip.getString(cursorTrip.getColumnIndex(Trip.TRIP_PLACE)));
 			Date today = new Date(cursorTrip.getLong(cursorTrip.getColumnIndex(Trip.TRIP_DAY)));
 			btnDate.setText(dateFormat.format(today));
-			long hour = cursorTrip.getLong(cursorTrip.getColumnIndex(Trip.TRIP_HOUR));
-			if (hour != -1) {
-				today = new Date(hour);
-				btnHour.setText(timeFormat.format(today));
-			}
 			int precision = cursorTrip.getInt(cursorTrip.getColumnIndex(Trip.TRIP_PRECISION));
 			seekPrecision.setProgress(precision);
 			showPrecision(precision);
@@ -151,7 +139,6 @@ public class EditionActivity extends AbstractActivity //
 			placeEdit.setText("");
 			Date today = new Date();
 			btnDate.setText(dateFormat.format(today));
-			btnHour.setText(timeFormat.format(today));
 			seekPrecision.setProgress(50);
 			showPrecision(50);
 			alertSMS.setChecked(true);
@@ -176,7 +163,7 @@ public class EditionActivity extends AbstractActivity //
 	private boolean validateDatas() {
 		boolean result = true;
 
-		if (tripNameTxt.getText().toString().trim().length() == 0) {
+		if (tripNameTxt.getVisibility() != View.GONE && tripNameTxt.getText().toString().trim().length() == 0) {
 			result = false;
 			// TODO gerer erreur
 		} else if (placeEdit.getText().toString().trim().length() == 0) {
@@ -219,7 +206,12 @@ public class EditionActivity extends AbstractActivity //
 				if (tripId != -1) {
 					values.put(Trip._ID, tripId);
 				}
-				values.put(Trip.TRIP_NAME, tripNameTxt.getText().toString());
+				if (tripNameTxt.getVisibility() == View.GONE) {
+
+					values.put(Trip.TRIP_NAME, placeEdit.getText().toString());
+				} else {
+					values.put(Trip.TRIP_NAME, tripNameTxt.getText().toString());
+				}
 				values.put(Trip.TRIP_PLACE, placeEdit.getText().toString());
 				values.put(Trip.TRIP_RECIPIENT, recipients.getText().toString());
 				switch (radioGroupAlert.getCheckedRadioButtonId()) {
@@ -249,9 +241,6 @@ public class EditionActivity extends AbstractActivity //
 				}
 				values.put(Trip.TRIP_MESSAGE, messageContent.getText().toString());
 				values.put(Trip.TRIP_DAY, date.getTime());
-				if (btnHour.isEnabled()) {
-					values.put(Trip.TRIP_HOUR, hour.getTime());
-				}
 
 				if (tripId != -1) {
 					// Update
@@ -280,13 +269,6 @@ public class EditionActivity extends AbstractActivity //
 			DateDialogFragment dateFragment = new DateDialogFragment();
 			dateFragment.setListener(this);
 			dateFragment.show(getSupportFragmentManager(), "datePicker");
-			break;
-		case R.id.btnHour:
-			DialogFragment hourFragment = new TimeDialogFragment();
-			hourFragment.show(getSupportFragmentManager(), "timePicker");
-			break;
-		case R.id.departHour:
-			btnHour.setEnabled(departHour.isChecked());
 			break;
 
 		default:

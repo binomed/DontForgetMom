@@ -161,7 +161,6 @@ public class DontForgetMomContentProvider extends ContentProvider {
 	private void checkColumns(String[] projection) {
 		String[] available = { DontForgetMomDbInformation.Trip._ID,//
 				DontForgetMomDbInformation.Trip.TRIP_DAY,//
-				DontForgetMomDbInformation.Trip.TRIP_HOUR,//
 				DontForgetMomDbInformation.Trip.TRIP_LAST_LAUNCH,//
 				DontForgetMomDbInformation.Trip.TRIP_MESSAGE,//
 				DontForgetMomDbInformation.Trip.TRIP_NAME,//

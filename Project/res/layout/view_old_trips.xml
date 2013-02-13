@@ -36,6 +36,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="10dip" 
+        android:ellipsize="end"
         android:textAppearance="?android:attr/textAppearanceLarge"
         />
     <TextView
