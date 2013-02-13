@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.binomed.dont.forget.mom.R;
 import com.binomed.dont.forget.mom.adapter.DontForgetMomPagerAdapter;
@@ -46,11 +47,8 @@ public class TripsActivity extends AbstractDontForgetMomActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
-		menu.add(1, ITEM_NEW, Menu.NONE, R.string.action_new) //
-				.setIcon(R.drawable.ic_action_new) //
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		super.onCreateOptionsMenu(menu);
-
+		MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.activity_trips_menu, menu);
 		return true;
 	}
 
@@ -58,7 +56,7 @@ public class TripsActivity extends AbstractDontForgetMomActivity {
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 
 		switch (item.getItemId()) {
-		case ITEM_NEW:
+		case R.id.ic_action_new:
 			Intent intent = new Intent(this, EditionActivity.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 			startActivity(intent);

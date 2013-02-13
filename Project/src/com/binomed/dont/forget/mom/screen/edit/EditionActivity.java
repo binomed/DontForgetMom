@@ -26,6 +26,7 @@ import android.widget.TimePicker;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.binomed.dont.forget.mom.R;
 import com.binomed.dont.forget.mom.adapter.DontForgetMomContactAdapter;
@@ -188,11 +189,8 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
-		menu.add(1, ITEM_SAVE, Menu.NONE, R.string.action_save) //
-				.setIcon(R.drawable.ic_action_save) //
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		super.onCreateOptionsMenu(menu);
-
+		MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.activity_edit_menu, menu);
 		return true;
 	}
 
@@ -200,7 +198,7 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 
 		switch (item.getItemId()) {
-		case ITEM_SAVE:
+		case R.id.ic_action_save:
 			if (validateDatas()) {
 				ContentValues values = new ContentValues();
 				if (tripId != -1) {

@@ -9,10 +9,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,11 +22,13 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.Window;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.binomed.dont.forget.mom.R;
+import com.binomed.dont.forget.mom.utils.DontForgetMomCst;
 import com.binomed.dont.forget.mom.utils.LocalActivityManagerFragment;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
@@ -38,6 +42,7 @@ public class CurentTripFragment extends LocalActivityManagerFragment implements 
 	View innerMapView, mainView;
 	ViewGroup mapViewContainer;
 	DontForgetMomOverLay overLay;
+	RelativeLayout mask;
 
 	private SherlockFragmentActivity activity;
 	private final static String ACTIVITY_TAG = "hosted";
@@ -57,13 +62,21 @@ public class CurentTripFragment extends LocalActivityManagerFragment implements 
 		TextView imgSms = (TextView) mainView.findViewById(R.id.imgSms);
 		TextView imgMail = (TextView) mainView.findViewById(R.id.imgMails);
 		TextView imgCall = (TextView) mainView.findViewById(R.id.imgCall);
+		mask = (RelativeLayout) mainView.findViewById(R.id.mask);
 
 		imgSms.setOnClickListener(this);
 		imgMail.setOnClickListener(this);
 		imgCall.setOnClickListener(this);
 
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		manageMask(prefs.getBoolean(DontForgetMomCst.PREF_CURENT_TRIP_NOT_IN_PROGRESS, true));
+
 		return mainView;
 
+	}
+
+	public void manageMask(boolean show) {
+		mask.setVisibility(show ? View.VISIBLE : View.GONE);
 	}
 
 	@Override
