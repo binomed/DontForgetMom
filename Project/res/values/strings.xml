@@ -57,6 +57,7 @@
     <string name="tripKAlertPhone">Phone alert</string>
     <string name="tripAlertTo">Recipients</string>
     <string name="tripAlertContent">Message content</string>
+    <string name="tripNoCurrentTrip">No Curent trip</string>
     
     
 

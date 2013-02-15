@@ -25,7 +25,6 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.binomed.dont.forget.mom.R;
 import com.google.inject.Inject;
@@ -45,10 +44,10 @@ public abstract class AbstractDontForgetMomActivity extends SherlockFragmentActi
 			// intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			// startActivity(intent);
 			return true;
-		case ITEM_ABOUT:
+		case R.id.ic_action_about:
 			Toast.makeText(this, "About", Toast.LENGTH_SHORT).show();
 			return true;
-		case ITEM_INFO:
+		case R.id.ic_action_help:
 			Toast.makeText(this, "Info", Toast.LENGTH_SHORT).show();
 			return true;
 
@@ -73,19 +72,6 @@ public abstract class AbstractDontForgetMomActivity extends SherlockFragmentActi
 		eventManager.fire(new OnCreateEvent(savedInstanceState));
 		// customize the SlidingMenu
 
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-
-		menu.add(0, ITEM_ABOUT, Menu.NONE, R.string.action_about) //
-				.setIcon(R.drawable.ic_action_about) //
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		menu.add(0, ITEM_INFO, Menu.NONE, R.string.action_help) //
-				.setIcon(R.drawable.ic_action_help) //
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-
-		return true;
 	}
 
 	@Override

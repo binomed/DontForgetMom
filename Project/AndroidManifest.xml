@@ -48,6 +48,12 @@
      <provider android:name="com.binomed.dont.forget.mom.db.DontForgetMomContentProvider"
 			android:authorities="com.bibomed.dont.forget.mom.db"
 			android:exported="false" />
+     <receiver android:name=".reciever.BootReciever" android:enabled="true">
+            <intent-filter>
+                    <action android:name ="android.intent.action.BOOT_COMPLETED"></action>
+            </intent-filter>
+    </receiver>
+     <receiver android:name=".reciever.ProxymityIntentReciever" android:enabled="true"></receiver>
     </application>
     
 
