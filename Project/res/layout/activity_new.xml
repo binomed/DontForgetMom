@@ -49,16 +49,6 @@
                 android:visibility="gone" 
                 />
     	
-    	<TextView
-            android:id="@+id/destination"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tripNameTxt"
-            android:paddingLeft="30dip"
-            android:layout_marginTop="10dip"
-            android:background="#EEEEEE"
-            android:text="@string/tripDestination"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
           <AutoCompleteTextView
               android:id="@+id/placeEdit"
               android:layout_width="fill_parent"
@@ -67,7 +57,6 @@
               android:layout_marginRight="10dip"
               android:layout_marginLeft="10dip"
               android:layout_gravity="center_vertical"
-              android:layout_below="@+id/destination"
               android:inputType="text"
               android:hint="@string/tripDestination"
               android:lines="1"
@@ -106,23 +95,13 @@
             android:layout_toLeftOf="@+id/btnDate"
             android:layout_alignBottom="@+id/btnDate"
             android:text="@string/tripDepartureDate"/>
-         <TextView
-            android:id="@+id/alert"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/departDate"
-            android:paddingLeft="30dip"
-            android:layout_marginTop="10dip"
-            android:background="#EEEEEE"
-            android:text="@string/tripAlert"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
         <TextView
             android:id="@+id/precisionTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dip"
             android:layout_marginTop="10dip"
-            android:layout_below="@+id/alert"
+            android:layout_below="@+id/departDate"
             android:text="@string/tripPrecision"
             android:textAppearance="?android:attr/textAppearanceLarge" />
         <ImageView 
@@ -161,6 +140,34 @@
             style="@style/Separator"
             android:layout_below="@+id/kindAlertTxt"
             />
+        <CheckBox
+            android:id="@+id/alertSMS"
+           	android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:layout_marginLeft="20dip"
+            android:layout_below="@+id/separatorAlertKind"
+            android:text="@string/tripKAlertSMS" 
+            />
+        <CheckBox
+            android:id="@+id/alertMail"
+          	android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/alertSMS"
+            android:layout_marginTop="5dip"
+            android:layout_marginLeft="20dip"
+            android:text="@string/tripKAlertMail"
+              />
+          <CheckBox
+            android:id="@+id/alertPhone"
+          	android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:layout_marginLeft="20dip"
+            android:layout_below="@+id/alertMail"
+            android:text="@string/tripKAlertPhone"
+             />
+        <!-- 
         <RadioGroup 
             android:id="@+id/radioGroupAlert"
             android:layout_width="fill_parent"
@@ -198,11 +205,12 @@
 	             android:text="@string/tripKAlertPhone"
                 />
         </RadioGroup>
+         -->
            <MultiAutoCompleteTextView
                android:id="@+id/recipients"
                android:layout_width="fill_parent"
                android:layout_height="wrap_content"
-            android:layout_below="@+id/radioGroupAlert"
+            android:layout_below="@+id/alertPhone"
             android:layout_marginTop="10dip" 
                android:layout_marginRight="10dip"
                android:layout_marginLeft="10dip"

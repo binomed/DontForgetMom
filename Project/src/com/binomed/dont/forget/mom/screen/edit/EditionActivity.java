@@ -13,12 +13,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -58,16 +58,12 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 	SeekBar seekPrecision;
 	@InjectView(R.id.lblPrecision)
 	TextView lblPrecision;
-	@InjectView(R.id.radioGroupAlert)
-	RadioGroup radioGroupAlert;
 	@InjectView(R.id.alertSMS)
-	RadioButton alertSMS;
+	CheckBox alertSMS;
 	@InjectView(R.id.alertMail)
-	RadioButton alertMail;
-	@InjectView(R.id.alertMailSMS)
-	RadioButton alertMailSMS;
+	CheckBox alertMail;
 	@InjectView(R.id.alertPhone)
-	RadioButton alertPhone;
+	CheckBox alertPhone;
 	@InjectView(R.id.recipients)
 	MultiAutoCompleteTextView recipients;
 	@InjectView(R.id.messageContent)
@@ -101,7 +97,9 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 
 	private void initListeners() {
 		seekPrecision.setOnSeekBarChangeListener(this);
-		radioGroupAlert.setOnCheckedChangeListener(this);
+		alertSMS.setOnCheckedChangeListener(this);
+		alertPhone.setOnCheckedChangeListener(this);
+		alertMail.setOnCheckedChangeListener(this);
 	}
 
 	private void initDatas() {
@@ -176,7 +174,7 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 		} else if (messageContent.getText().toString().trim().length() == 0) {
 			result = false;
 			// TODO gerer erreur
-		} else if (radioGroupAlert.getCheckedRadioButtonId() == R.id.alertPhone //
+		} else if (alertPhone.isChecked() //
 				&& recipients.getText().toString().trim().indexOf(",") != recipients.getText().toString().trim().lastIndexOf(",")) {
 			result = false;
 			// On ne peut pas appeler plusieurs personnes.
@@ -212,24 +210,16 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 				}
 				values.put(Trip.TRIP_PLACE, placeEdit.getText().toString());
 				values.put(Trip.TRIP_RECIPIENT, recipients.getText().toString());
-				switch (radioGroupAlert.getCheckedRadioButtonId()) {
-				case R.id.alertSMS:
-					values.put(Trip.TRIP_TYPE_ALERT, DontForgetMomCst.TYPE_ALERT_SMS);
-					break;
-				case R.id.alertMail:
-					values.put(Trip.TRIP_TYPE_ALERT, DontForgetMomCst.TYPE_ALERT_MAIL);
-
-					break;
-				case R.id.alertMailSMS:
+				if (alertSMS.isChecked() && alertMail.isChecked()) {
 					values.put(Trip.TRIP_TYPE_ALERT, DontForgetMomCst.TYPE_ALERT_SMS_MAIL);
-
-					break;
-				case R.id.alertPhone:
+				} else if (alertSMS.isChecked()) {
+					values.put(Trip.TRIP_TYPE_ALERT, DontForgetMomCst.TYPE_ALERT_SMS);
+				} else if (alertMail.isChecked()) {
+					values.put(Trip.TRIP_TYPE_ALERT, DontForgetMomCst.TYPE_ALERT_MAIL);
+				} else {
 					values.put(Trip.TRIP_TYPE_ALERT, DontForgetMomCst.TYPE_ALERT_PHONE);
-					break;
-				default:
-					break;
 				}
+
 				if (seekPrecision.getProgress() < 33) {
 					values.put(Trip.TRIP_PRECISION, DontForgetMomCst.PRECISION_HIGH);
 				} else if (seekPrecision.getProgress() < 66) {
@@ -300,17 +290,36 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 	}
 
 	@Override
-	public void onCheckedChanged(RadioGroup group, int checkedId) {
-		switch (checkedId) {
-		case R.id.alertSMS:
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		switch (buttonView.getId()) {
 		case R.id.alertPhone:
-			adapterRecipent.setType(TypeDatas.PHONE);
+			if (isChecked) {
+				alertMail.setChecked(false);
+				alertSMS.setChecked(false);
+				adapterRecipent.setType(TypeDatas.PHONE);
+			}
+			alertMail.setEnabled(!isChecked);
+			alertSMS.setEnabled(!isChecked);
+			break;
+		case R.id.alertSMS:
+			if (alertMail.isChecked() && isChecked) {
+				adapterRecipent.setType(TypeDatas.PHONE_MAIL);
+			} else if (isChecked) {
+				adapterRecipent.setType(TypeDatas.PHONE);
+			} else if (!alertMail.isChecked() && !alertPhone.isChecked()) {
+				adapterRecipent.setType(TypeDatas.PHONE);
+				// On met par défaut alert sms
+				alertSMS.setChecked(true);
+			}
 			break;
 		case R.id.alertMail:
-			adapterRecipent.setType(TypeDatas.MAIL);
-			break;
-		case R.id.alertMailSMS:
-			adapterRecipent.setType(TypeDatas.PHONE_MAIL);
+			if (alertSMS.isChecked() && isChecked) {
+				adapterRecipent.setType(TypeDatas.PHONE_MAIL);
+			} else if (isChecked) {
+				adapterRecipent.setType(TypeDatas.MAIL);
+			} else {
+				adapterRecipent.setType(TypeDatas.PHONE);
+			}
 			break;
 		default:
 			break;
