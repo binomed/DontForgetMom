@@ -58,6 +58,7 @@
     <string name="tripAlertTo">Recipients</string>
     <string name="tripAlertContent">Message content</string>
     <string name="tripNoCurrentTrip">No Curent trip</string>
+    <string name="defaultTripName">Trip</string>
     
     
 

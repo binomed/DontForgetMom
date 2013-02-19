@@ -10,6 +10,7 @@ import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -22,7 +23,9 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
@@ -189,6 +192,24 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 
 		MenuInflater inflater = getSupportMenuInflater();
 		inflater.inflate(R.menu.activity_edit_menu, menu);
+
+		/** Get the action view of the menu item whose id is search */
+		final View v = (View) menu.findItem(R.id.ic_action_name).getActionView();
+
+		/** Get the edit text from the action view */
+		EditText txtSearch = (EditText) v.findViewById(R.id.name_trip);
+
+		/** Setting an action listener */
+		txtSearch.setOnEditorActionListener(new OnEditorActionListener() {
+
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				v.setText(v.getText());
+				Toast.makeText(getBaseContext(), "Search : " + v.getText(), Toast.LENGTH_SHORT).show();
+				return false;
+			}
+		});
+
 		return true;
 	}
 
@@ -244,7 +265,8 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 				finish();
 			}
 			return true;
-
+		case R.id.ic_action_name:
+			return true;
 		default:
 			return super.onMenuItemSelected(featureId, item);
 		}

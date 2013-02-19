@@ -37,7 +37,6 @@
         </activity>
         <activity
             android:name=".screen.edit.EditionActivity"
-            android:label="@string/action_new" 
             android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
