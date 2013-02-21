@@ -19,9 +19,11 @@
     android:layout_height="match_parent"
     >
 
+    
     <EditText
         android:id="@+id/name_trip"
         android:inputType="text"
+        android:imeOptions="actionDone"
         android:layout_width="match_parent" 
         android:layout_height="wrap_content" 
         />

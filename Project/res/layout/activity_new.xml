@@ -23,32 +23,6 @@
         android:layout_height="match_parent"
         >
 
-    	<TextView
-            android:id="@+id/information"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dip"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:paddingLeft="30dip"
-            android:background="#EEEEEE"
-            android:text="@string/tripInformation"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:visibility="gone" />
-         <EditText
-                android:id="@+id/tripNameTxt"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dip"
-                android:layout_marginTop="10dip"
-                android:layout_marginLeft="10dip"
-                android:layout_below="@+id/information"
-                android:inputType="text"
-                android:hint="@string/tripName"
-                android:lines="1"
-                android:visibility="gone" 
-                />
-    	
           <AutoCompleteTextView
               android:id="@+id/placeEdit"
               android:layout_width="fill_parent"
@@ -65,11 +39,9 @@
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dip"
-            android:layout_marginTop="10dip"
             android:layout_below="@+id/placeEdit"
             android:text="@string/tripDate"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            style="@style/Title" />
         <ImageView 
             android:id="@+id/separatorDate"
             style="@style/Separator"
@@ -99,11 +71,9 @@
             android:id="@+id/precisionTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dip"
-            android:layout_marginTop="10dip"
             android:layout_below="@+id/departDate"
             android:text="@string/tripPrecision"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            style="@style/Title" />
         <ImageView 
             android:id="@+id/separatorPrecision"
            style="@style/Separator"
@@ -130,11 +100,9 @@
             android:id="@+id/kindAlertTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dip"
-            android:layout_marginTop="10dip"
             android:layout_below="@+id/lblPrecision"
             android:text="@string/tripKindAlert"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            style="@style/Title"/>
         <ImageView 
             android:id="@+id/separatorAlertKind"
             style="@style/Separator"

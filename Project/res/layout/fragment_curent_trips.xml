@@ -19,7 +19,7 @@
     android:layout_height="match_parent" >
     
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView 
     android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
@@ -125,6 +125,20 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
            
             
+            
+            <fragment 
+			  android:id="@+id/mapFragment"
+                android:layout_below="@+id/map"
+                android:layout_marginTop="20dip"
+                android:layout_marginLeft="50dip"
+                android:layout_marginRight="50dip"
+                android:layout_marginBottom="30dip"
+                android:layout_centerHorizontal="true"
+			    android:layout_width="@dimen/size_map"
+			    android:layout_height="@dimen/size_map"
+			  class="com.google.android.gms.maps.SupportMapFragment"/>
+            <!-- 
+ 
             <FrameLayout
 			    android:id="@+id/mapviewcontainer"
                 android:layout_below="@+id/map"
@@ -136,6 +150,8 @@
 			    android:layout_width="@dimen/size_map"
 			    android:layout_height="@dimen/size_map"
                 />
+             -->
+
             
             
     </RelativeLayout>

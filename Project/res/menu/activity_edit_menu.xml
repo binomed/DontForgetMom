@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
    <item 
 	   android:id="@+id/ic_action_name"
+       android:icon="@drawable/ic_action_edit"
 	   android:showAsAction="ifRoom|collapseActionView"
-	   android:title="@string/defaultTripName"
 	   android:actionLayout="@layout/actionview_edit_name"
 	/>
     

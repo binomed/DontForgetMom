@@ -6,12 +6,13 @@ import java.util.Date;
 
 import roboguice.inject.InjectView;
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnKeyListener;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -24,8 +25,6 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
-import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
@@ -46,13 +45,11 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 		implements OnSeekBarChangeListener //
 		, OnCheckedChangeListener //
 		, DatePickerDialog.OnDateSetListener //
-		, TimePickerDialog.OnTimeSetListener //
+		, OnKeyListener//
 {
 
 	public static final int ITEM_SAVE = 3;
 
-	@InjectView(R.id.tripNameTxt)
-	EditText tripNameTxt;
 	@InjectView(R.id.placeEdit)
 	AutoCompleteTextView placeEdit;
 	@InjectView(R.id.btnDate)
@@ -71,6 +68,8 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 	MultiAutoCompleteTextView recipients;
 	@InjectView(R.id.messageContent)
 	EditText messageContent;
+
+	EditText txtNameActionBar;
 
 	private Date date = new Date(), hour = new Date();
 	private int tripId;
@@ -103,6 +102,10 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 		alertSMS.setOnCheckedChangeListener(this);
 		alertPhone.setOnCheckedChangeListener(this);
 		alertMail.setOnCheckedChangeListener(this);
+
+		placeEdit.setOnKeyListener(this);
+		recipients.setOnKeyListener(this);
+		messageContent.setOnKeyListener(this);
 	}
 
 	private void initDatas() {
@@ -125,7 +128,7 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 		}
 
 		if (cursorTrip != null && cursorTrip.moveToFirst()) {
-			tripNameTxt.setText(cursorTrip.getString(cursorTrip.getColumnIndex(Trip.TRIP_NAME)));
+			setTitle(cursorTrip.getString(cursorTrip.getColumnIndex(Trip.TRIP_NAME)));
 			placeEdit.setText(cursorTrip.getString(cursorTrip.getColumnIndex(Trip.TRIP_PLACE)));
 			Date today = new Date(cursorTrip.getLong(cursorTrip.getColumnIndex(Trip.TRIP_DAY)));
 			btnDate.setText(dateFormat.format(today));
@@ -137,7 +140,7 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 
 			cursorTrip.close();
 		} else {
-			tripNameTxt.setText("");
+			setTitle(R.string.defaultTripName);
 			placeEdit.setText("");
 			Date today = new Date();
 			btnDate.setText(dateFormat.format(today));
@@ -165,23 +168,23 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 	private boolean validateDatas() {
 		boolean result = true;
 
-		if (tripNameTxt.getVisibility() != View.GONE && tripNameTxt.getText().toString().trim().length() == 0) {
+		if (placeEdit.getText().toString().trim().length() == 0) {
 			result = false;
-			// TODO gerer erreur
-		} else if (placeEdit.getText().toString().trim().length() == 0) {
+			placeEdit.setError(getString(R.string.error_desination_empty));
+		}
+		if (recipients.getText().toString().trim().length() == 0) {
+			recipients.setError(getString(R.string.error_recipients_empty));
 			result = false;
-			// TODO gerer erreur
-		} else if (recipients.getText().toString().trim().length() == 0) {
+		}
+		if (!alertPhone.isChecked() && messageContent.getText().toString().trim().length() == 0) {
+			messageContent.setError(getString(R.string.error_message_empty));
 			result = false;
-			// TODO gerer erreur
-		} else if (messageContent.getText().toString().trim().length() == 0) {
-			result = false;
-			// TODO gerer erreur
-		} else if (alertPhone.isChecked() //
+		}
+		if (alertPhone.isChecked() //
 				&& recipients.getText().toString().trim().indexOf(",") != recipients.getText().toString().trim().lastIndexOf(",")) {
 			result = false;
 			// On ne peut pas appeler plusieurs personnes.
-			// TODO gerer erreur
+			recipients.setError(getString(R.string.error_multiple_recipients_phone));
 		}
 
 		return result;
@@ -194,19 +197,22 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 		inflater.inflate(R.menu.activity_edit_menu, menu);
 
 		/** Get the action view of the menu item whose id is search */
-		final View v = (View) menu.findItem(R.id.ic_action_name).getActionView();
+		final MenuItem menuItem = menu.findItem(R.id.ic_action_name);
+		final View v = (View) menuItem.getActionView();
 
 		/** Get the edit text from the action view */
-		EditText txtSearch = (EditText) v.findViewById(R.id.name_trip);
+		txtNameActionBar = (EditText) v.findViewById(R.id.name_trip);
 
 		/** Setting an action listener */
-		txtSearch.setOnEditorActionListener(new OnEditorActionListener() {
+		txtNameActionBar.setOnEditorActionListener(new OnEditorActionListener() {
 
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				v.setText(v.getText());
-				Toast.makeText(getBaseContext(), "Search : " + v.getText(), Toast.LENGTH_SHORT).show();
-				return false;
+				if (event == null || actionId == EditorInfo.IME_ACTION_DONE) {
+					setTitle(v.getText().length() > 0 ? v.getText() : getString(R.string.defaultTripName));
+					menuItem.collapseActionView();
+				}
+				return true;
 			}
 		});
 
@@ -223,12 +229,8 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 				if (tripId != -1) {
 					values.put(Trip._ID, tripId);
 				}
-				if (tripNameTxt.getVisibility() == View.GONE) {
 
-					values.put(Trip.TRIP_NAME, placeEdit.getText().toString());
-				} else {
-					values.put(Trip.TRIP_NAME, tripNameTxt.getText().toString());
-				}
+				values.put(Trip.TRIP_NAME, placeEdit.getText().toString());
 				values.put(Trip.TRIP_PLACE, placeEdit.getText().toString());
 				values.put(Trip.TRIP_RECIPIENT, recipients.getText().toString());
 				if (alertSMS.isChecked() && alertMail.isChecked()) {
@@ -266,6 +268,7 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 			}
 			return true;
 		case R.id.ic_action_name:
+			txtNameActionBar.requestFocus();
 			return true;
 		default:
 			return super.onMenuItemSelected(featureId, item);
@@ -319,6 +322,9 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 				alertMail.setChecked(false);
 				alertSMS.setChecked(false);
 				adapterRecipent.setType(TypeDatas.PHONE);
+			} else {
+				// On met par défaut alert sms
+				alertSMS.setChecked(true);
 			}
 			alertMail.setEnabled(!isChecked);
 			alertSMS.setEnabled(!isChecked);
@@ -340,6 +346,8 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 			} else if (isChecked) {
 				adapterRecipent.setType(TypeDatas.MAIL);
 			} else {
+				// On met par défaut alert sms
+				alertSMS.setChecked(true);
 				adapterRecipent.setType(TypeDatas.PHONE);
 			}
 			break;
@@ -360,13 +368,9 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 	}
 
 	@Override
-	public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-		calendar.set(Calendar.MINUTE, minute);
-		hour = calendar.getTime();
-
+	public boolean onKey(View view, int arg1, KeyEvent arg2) {
+		((EditText) view).setError(null);
+		return false;
 	}
 
 }
