@@ -14,7 +14,7 @@
     <string name="no_trips">No trips done</string>
     <string name="old_action_replay">Replay</string>
     <string name="old_action_duplicate">Duplicate</string>
-    <string name="old_action_view">View</string>    
+    <string name="old_action_edit">Edit</string>    
     <string name="trip_never_launch">Trip never launch</string>    
     <!-- current Trips  -->
     <string name="toggleBtnOn">ON</string>
@@ -46,7 +46,7 @@
     <string name="tripDepartureDate">Day of departure</string>
     <string name="tripPreciseHour">Precise hour of departure</string>
     <string name="tripAlert">Alert information</string>
-    <string name="tripPrecision">Precision</string>
+    <string name="tripPrecision">Precision to launch action</string>
     <string name="tripPrecisionLow">Low precision : 1km</string>
     <string name="tripPrecisionMiddle">Fair precision : 100m</string>
     <string name="tripPrecisionMHigh">High precision : 10m</string>
@@ -58,6 +58,15 @@
     <string name="tripAlertTo">Recipients</string>
     <string name="tripAlertContent">Message content</string>
     <string name="tripNoCurrentTrip">No Curent trip</string>
+    <string name="defaultTripName">Trip</string>
+    
+    <!-- Errors -->
+    <string name="error_name_empty">You have to set a name for the trip</string>
+    <string name="error_desination_empty">You have to set a destination</string>
+    <string name="error_recipients_empty">You have to set at least one recipient</string>
+    <string name="error_multiple_recipients_phone">You cannot have multiple recipients if you choose the phone alert</string>
+    <string name="error_message_empty">You have to set a message</string>
+    
     
     
 

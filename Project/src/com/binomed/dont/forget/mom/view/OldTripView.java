@@ -35,18 +35,18 @@ public class OldTripView extends RelativeLayout implements OnClickListener, OnAc
 	Drawable drawableActionReplay;
 	@InjectResource(R.drawable.ic_action_duplicate)
 	Drawable drawableActionDuplicate;
-	@InjectResource(R.drawable.ic_action_about)
-	Drawable drawableActionView;
+	@InjectResource(R.drawable.ic_action_edit)
+	Drawable drawableActionEdit;
 	@InjectResource(R.string.old_action_replay)
 	String strActionReplay;
 	@InjectResource(R.string.old_action_duplicate)
 	String strActionDuplicate;
-	@InjectResource(R.string.old_action_view)
-	String strActionView;
+	@InjectResource(R.string.old_action_edit)
+	String strActionEdit;
 
 	private static final int ACTION_REPLAY = 1;
 	private static final int ACTION_DUPLICATE = 2;
-	private static final int ACTION_VIEW = 3;
+	private static final int ACTION_EDIT = 3;
 
 	private int tripId;
 	private final DateFormat format;
@@ -64,7 +64,7 @@ public class OldTripView extends RelativeLayout implements OnClickListener, OnAc
 		// Init quickActions
 		ActionItem replayActionItem = new ActionItem(ACTION_REPLAY, strActionReplay, drawableActionReplay);
 		ActionItem duplicateActionItem = new ActionItem(ACTION_DUPLICATE, strActionDuplicate, drawableActionDuplicate);
-		ActionItem viewActionItem = new ActionItem(ACTION_VIEW, strActionView, drawableActionView);
+		ActionItem viewActionItem = new ActionItem(ACTION_EDIT, strActionEdit, drawableActionEdit);
 		quickAction = new QuickAction(context);
 		quickAction.addActionItem(replayActionItem);
 		quickAction.addActionItem(duplicateActionItem);
@@ -113,7 +113,7 @@ public class OldTripView extends RelativeLayout implements OnClickListener, OnAc
 			Toast.makeText(getContext(), "Replay", Toast.LENGTH_LONG);
 
 			break;
-		case ACTION_VIEW:
+		case ACTION_EDIT:
 			Intent viewIntent = new Intent(getContext(), EditionActivity.class);
 			viewIntent.putExtra(DontForgetMomCst.INTENT_DUPLICATE, true);
 			viewIntent.putExtra(Trip._ID, tripId);

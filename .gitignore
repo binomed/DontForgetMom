@@ -1,4 +1,6 @@
 
+/Libraries/GooglePlayServicesLib/bin
+/Libraries/GooglePlayServicesLib/gen
 /Libraries/ActionBarSherlock/bin
 /Libraries/ActionBarSherlock/gen
 /Libraries/ActionBarSherlock/target

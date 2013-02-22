@@ -3,12 +3,10 @@ package com.binomed.dont.forget.mom.screen.trips;
 import net.londatiga.android.ActionItem;
 import net.londatiga.android.QuickAction;
 import net.londatiga.android.QuickAction.OnActionItemClickListener;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
@@ -20,29 +18,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewParent;
-import android.view.Window;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.binomed.dont.forget.mom.R;
 import com.binomed.dont.forget.mom.utils.DontForgetMomCst;
-import com.binomed.dont.forget.mom.utils.LocalActivityManagerFragment;
-import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapController;
-import com.google.android.maps.MapView;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-@SuppressLint("NewApi")
-public class CurentTripFragment extends LocalActivityManagerFragment implements LocationListener, OnClickListener {
+public class CurentTripFragment extends SherlockFragment implements LocationListener, OnClickListener {
 
-	MapView mapView;
-	MapController mapController;
-	View innerMapView, mainView;
-	ViewGroup mapViewContainer;
-	DontForgetMomOverLay overLay;
+	View mainView;
+	Marker curentPosition;
 	RelativeLayout mask;
+
+	SupportMapFragment mapFragment;
 
 	private SherlockFragmentActivity activity;
 	private final static String ACTIVITY_TAG = "hosted";
@@ -77,6 +74,7 @@ public class CurentTripFragment extends LocalActivityManagerFragment implements 
 
 	public void manageMask(boolean show) {
 		mask.setVisibility(show ? View.VISIBLE : View.GONE);
+		mainView.findViewById(R.id.scrollView).setVisibility(!show ? View.VISIBLE : View.GONE);
 	}
 
 	@Override
@@ -87,56 +85,18 @@ public class CurentTripFragment extends LocalActivityManagerFragment implements 
 	}
 
 	private void manageMapView(View mainView) {
-		mapViewContainer = (ViewGroup) mainView.findViewById(R.id.mapviewcontainer);
+		mapFragment = (SupportMapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.mapFragment); // (SupportMapFragment) mainView.findViewById(R.id.mapFragment);
+		curentPosition = mapFragment.getMap().addMarker(new MarkerOptions() //
+				.position(new LatLng(0, 0)).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_maps_indicator_current_position)));
 
-		Intent intent = new Intent(getActivity(), InnerMapActivity.class);
-		final Window w = getLocalActivityManager().startActivity(ACTIVITY_TAG, intent);
-		innerMapView = w != null ? w.getDecorView() : null;
+		mapFragment.getMap().animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+		onLocationChanged(getLastLocation(getActivity()));
 
-		if (innerMapView != null) {
-			ViewParent parent = innerMapView.getParent();
-			if (parent != null) {
-				ViewGroup v = (ViewGroup) parent;
-				v.removeView(innerMapView);
-			}
-
-			innerMapView.setVisibility(View.VISIBLE);
-			innerMapView.setFocusableInTouchMode(true);
-			if (innerMapView instanceof ViewGroup) {
-				((ViewGroup) innerMapView).setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
-			}
-		}
-
-		mapViewContainer.addView(innerMapView);
-
-		// We retrieve the mapView
-		InnerMapActivity activityMap = (InnerMapActivity) getLocalActivityManager().getActivity(ACTIVITY_TAG);
-		if (activityMap != null) {
-			mapView = activityMap.getMapView();
-			mapController = mapView.getController();
-			mapController.setZoom(17);
-
-			overLay = new DontForgetMomOverLay(getResources().getDrawable(R.drawable.ic_maps_indicator_current_position));
-			mapView.getOverlays().add(overLay);
-
-			onLocationChanged(getLastLocation(getActivity()));
-
-		}
-	}
-
-	private int microdefress(double value) {
-		return (int) (value * 1000000);
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		if (innerMapView != null) {
-			mapView.getOverlays().clear();
-			mapView = null;
-			mapViewContainer.removeView(innerMapView);
-			innerMapView = null;
-		}
 	}
 
 	@Override
@@ -167,9 +127,9 @@ public class CurentTripFragment extends LocalActivityManagerFragment implements 
 	@Override
 	public void onLocationChanged(Location location) {
 		if (location != null) {
-			GeoPoint geoPoint = new GeoPoint(microdefress(location.getLatitude()), microdefress(location.getLongitude()));
-			mapController.animateTo(geoPoint);
-			overLay.managePoint(geoPoint);
+			LatLng geoPoint = new LatLng(location.getLatitude(), location.getLongitude());
+			curentPosition.setPosition(geoPoint);
+			mapFragment.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(geoPoint, 15));
 		}
 
 	}
