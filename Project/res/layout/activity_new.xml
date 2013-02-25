@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/placeEdit"
-            android:text="@string/tripDate"
+            android:text="@string/tripDepartureDate"
             style="@style/Title" />
         <ImageView 
             android:id="@+id/separatorDate"
@@ -51,27 +51,17 @@
              android:id="@+id/btnDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
             android:layout_marginTop="10dip"
-            android:layout_marginRight="10dip"
+            android:layout_marginLeft="20dip"
             android:layout_below="@+id/separatorDate"
             android:onClick="onClick"
             />
-         <TextView
-            android:id="@+id/departDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
-            android:layout_marginLeft="10dip"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/btnDate"
-            android:layout_alignBottom="@+id/btnDate"
-            android:text="@string/tripDepartureDate"/>
         <TextView
             android:id="@+id/precisionTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/departDate"
+            android:layout_below="@+id/btnDate"
             android:text="@string/tripPrecision"
             style="@style/Title" />
         <ImageView 
