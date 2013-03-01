@@ -17,8 +17,8 @@ public class DontForgetMomPagerAdapter extends FragmentPagerAdapter {// implemen
 
 	private static final int NB_PAGES = 2;
 
-	private Fragment fragmentCurrent;
-	private Fragment fragmentOlds;
+	private CurentTripFragment fragmentCurrent;
+	private OldTripsFragment fragmentOlds;
 	private final Context context;
 	@InjectResource(R.string.tab_old)
 	String oldTabName;
@@ -37,14 +37,14 @@ public class DontForgetMomPagerAdapter extends FragmentPagerAdapter {// implemen
 		switch (index) {
 		case 0: {
 			if (fragmentOlds == null) {
-				fragmentOlds = Fragment.instantiate(context, OldTripsFragment.class.getName());
+				fragmentOlds = (OldTripsFragment) Fragment.instantiate(context, OldTripsFragment.class.getName());
 			}
 			fragment = fragmentOlds;
 			break;
 		}
 		default: {
 			if (fragmentCurrent == null) {
-				fragmentCurrent = Fragment.instantiate(context, CurentTripFragment.class.getName());
+				fragmentCurrent = (CurentTripFragment) Fragment.instantiate(context, CurentTripFragment.class.getName());
 			}
 			fragment = fragmentCurrent;
 			break;
@@ -68,6 +68,10 @@ public class DontForgetMomPagerAdapter extends FragmentPagerAdapter {// implemen
 		default:
 			return curentTabName;
 		}
+	}
+
+	public void requeryTrips() {
+		fragmentOlds.requery();
 	}
 
 	// @Override

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.binomed.dont.forget.mom.R;
 import com.binomed.dont.forget.mom.screen.edit.EditionActivity;
 import com.binomed.dont.forget.mom.screen.trips.TripsActivity;
+import com.binomed.dont.forget.mom.utils.DontForgetMomCst;
 import com.binomed.dont.forget.mom.utils.RoboSherlockFragment;
 
 public class HomeFragment extends RoboSherlockFragment implements OnClickListener {
@@ -64,7 +65,7 @@ public class HomeFragment extends RoboSherlockFragment implements OnClickListene
 		case R.id.home_btn_new:
 			Intent intent = new Intent(getActivity(), EditionActivity.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-			startActivity(intent);
+			startActivityForResult(intent, DontForgetMomCst.ACTIVITY_EDIT_REQUEST_CODE);
 			break;
 		case R.id.home_btn_about:
 			// TODO
@@ -78,4 +79,5 @@ public class HomeFragment extends RoboSherlockFragment implements OnClickListene
 			break;
 		}
 	}
+
 }

@@ -15,6 +15,10 @@
     <string name="old_action_replay">Replay</string>
     <string name="old_action_duplicate">Duplicate</string>
     <string name="old_action_edit">Edit</string>    
+    <string name="old_action_delete">Delete</string>    
+    <string name="old_confirm_delete">Delete selected trip</string>    
+    <string name="old_confirm_delete_msg">Your are going to delete the selected trip.</string>    
+    <string name="old_confirm_delete_ok">Delete</string>    
     <string name="trip_never_launch">Trip never launch</string>    
     <!-- current Trips  -->
     <string name="toggleBtnOn">ON</string>

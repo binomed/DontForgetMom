@@ -263,7 +263,7 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 					getContentResolver().insert(DontForgetMomContentProvider.CONTENT_URI, values);
 
 				}
-
+				setResult(RESULT_OK);
 				finish();
 			}
 			return true;

@@ -13,6 +13,7 @@ import com.binomed.dont.forget.mom.R;
 import com.binomed.dont.forget.mom.adapter.DontForgetMomPagerAdapter;
 import com.binomed.dont.forget.mom.screen.edit.EditionActivity;
 import com.binomed.dont.forget.mom.utils.AbstractDontForgetMomActivity;
+import com.binomed.dont.forget.mom.utils.DontForgetMomCst;
 import com.viewpagerindicator.TabPageIndicator;
 
 public class TripsActivity extends AbstractDontForgetMomActivity {
@@ -66,6 +67,14 @@ public class TripsActivity extends AbstractDontForgetMomActivity {
 			return super.onMenuItemSelected(featureId, item);
 		}
 
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+		if (requestCode == DontForgetMomCst.ACTIVITY_EDIT_REQUEST_CODE && resultCode == RESULT_OK) {
+			adapter.requeryTrips();
+		}
 	}
 
 }

@@ -15,4 +15,6 @@ public final class DontForgetMomCst {
 
 	public static final String PREF_CURENT_TRIP_NOT_IN_PROGRESS = "com.binomed.dont.forget.mom.pref.curentTrip";
 
+	public static final int ACTIVITY_EDIT_REQUEST_CODE = 1;
+
 }
