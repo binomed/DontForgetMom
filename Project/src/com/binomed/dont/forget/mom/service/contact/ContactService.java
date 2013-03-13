@@ -202,7 +202,7 @@ public class ContactService {
 			contact.setEmail(email);
 		}
 
-		if (cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER) != -1) {
+		if (cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.LABEL) != -1) {
 			id = cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID));
 			contact.setId(id);
 			contact.setDisplayName(cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)));

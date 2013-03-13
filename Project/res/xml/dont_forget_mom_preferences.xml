@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ * Copyright (C) 2011 Binomed (http://blog.binomed.fr)
+ *
+ * Licensed under the Eclipse Public License - v 1.0;
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.eclipse.org/legal/epl-v10.html
+ *
+ * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC 
+ * LICENSE ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM 
+ * CONSTITUTES RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
+ */ 
+ -->
+<PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/pref_cat">
+        <CheckBoxPreference
+                android:key="@string/pref_automatic_send_key"
+                android:summary="@string/pref_automatic_send_desc" 
+                android:title="@string/pref_automatic_send_title" 
+                android:defaultValue="true"/>
+	    <ListPreference 
+	    		android:key="@string/pref_defaut_message_key"
+	    		android:summary="@string/pref_default_message_desc" 
+                android:title="@string/pref_default_message_title"
+	    		android:entries="@array/pref_message_array" 
+	    		android:entryValues="@array/pref_message_array_code" />
+	    <ListPreference 
+	    		android:key="@string/pref_defaut_subject_key"
+	    		android:summary="@string/pref_default_subject_desc" 
+                android:title="@string/pref_default_subject_title"
+	    		android:entries="@array/pref_subject_array" 
+	    		android:entryValues="@array/pref_message_array_code" />
+	</PreferenceCategory>
+</PreferenceScreen>

@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -92,6 +93,8 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 
 		seekPrecision.setFocusable(true);
 		seekPrecision.setFocusableInTouchMode(true);
+
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
 		initDatas();
 		initListeners();

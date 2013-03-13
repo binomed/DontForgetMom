@@ -71,6 +71,36 @@
     <string name="error_multiple_recipients_phone">You cannot have multiple recipients if you choose the phone alert</string>
     <string name="error_message_empty">You have to set a message</string>
     
+    <!-- Preferences -->
+    <string name="pref_cat">Action</string>
+    <string name="pref_automatic_send_key">dont.forget.mom.pref.autosend</string>
+    <string name="pref_automatic_send_default_value">true</string>
+    <string name="pref_automatic_send_title">Automatic send</string>
+    <string name="pref_automatic_send_desc">When this option is checked, you message is automaticly send you arrived at destination. Else a confirmation notification is showed to you</string>
+    <string name="pref_defaut_message_key">dont.forget.mom.pref.message</string>
+    <string name="pref_default_message_value">0</string>
+    <string name="pref_default_message_title">Default message to send</string>
+    <string name="pref_default_message_desc">You can choose a default message to use when you plannify a trip. If the field is empty, you can enter your custom message</string>
+    <string name="pref_defaut_subject_key">dont.forget.mom.pref.subject</string>
+    <string name="pref_default_subject_value">0</string>
+    <string name="pref_default_subject_title">Default subject of message</string>
+    <string name="pref_default_subject_desc">You can choose a default subject to use when you plannify a trip. This field is only use when you choose a email alert.</string>
+    
+   	<string-array name="pref_message_array">
+		<item> </item>
+		<item>I\'m well arrived</item>
+		<item>I\'ve just arrived, the trip went well</item>
+	</string-array>
+   	<string-array name="pref_subject_array">
+		<item>[Dont forget mom] : I\'m arrived</item>
+		<item>I\'m well arrived</item>
+		<item>I\'ve just arrived, the trip went well</item>
+	</string-array>
+   	<string-array name="pref_message_array_code">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
     
     
 
