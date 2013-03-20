@@ -27,12 +27,14 @@
 	    		android:summary="@string/pref_default_message_desc" 
                 android:title="@string/pref_default_message_title"
 	    		android:entries="@array/pref_message_array" 
-	    		android:entryValues="@array/pref_message_array_code" />
+	    		android:entryValues="@array/pref_message_array_code" 
+	    		android:defaultValue="1"/>
 	    <ListPreference 
 	    		android:key="@string/pref_defaut_subject_key"
 	    		android:summary="@string/pref_default_subject_desc" 
                 android:title="@string/pref_default_subject_title"
 	    		android:entries="@array/pref_subject_array" 
-	    		android:entryValues="@array/pref_message_array_code" />
+	    		android:entryValues="@array/pref_message_array_code"
+	    		android:defaultValue="1" />
 	</PreferenceCategory>
 </PreferenceScreen>

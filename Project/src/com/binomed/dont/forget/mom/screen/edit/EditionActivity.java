@@ -4,11 +4,15 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import roboguice.inject.InjectResource;
 import roboguice.inject.InjectView;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
@@ -38,6 +42,7 @@ import com.binomed.dont.forget.mom.db.DontForgetMomContentProvider;
 import com.binomed.dont.forget.mom.db.DontForgetMomDbInformation;
 import com.binomed.dont.forget.mom.db.DontForgetMomDbInformation.Trip;
 import com.binomed.dont.forget.mom.dialog.DateDialogFragment;
+import com.binomed.dont.forget.mom.screen.trips.TripsActivity;
 import com.binomed.dont.forget.mom.service.contact.ContactService;
 import com.binomed.dont.forget.mom.utils.AbstractDontForgetMomActivity;
 import com.binomed.dont.forget.mom.utils.DontForgetMomCst;
@@ -70,15 +75,24 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 	@InjectView(R.id.messageContent)
 	EditText messageContent;
 
+	@InjectResource(R.array.pref_message_array)
+	String[] messages;
+	@InjectResource(R.string.pref_defaut_message_key)
+	String keyPref;
+
+	private static final int UPDATE_TEXT_FROM_PREF = 20;
+
 	EditText txtNameActionBar;
 
 	private Date date = new Date(), hour = new Date();
 	private int tripId;
+	private boolean firstScreen;
 
 	private DateFormat timeFormat;
 	private DateFormat dateFormat;
 
 	private DontForgetMomContactAdapter adapterPlace, adapterRecipent;
+	private SharedPreferences preferences;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -93,6 +107,8 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 
 		seekPrecision.setFocusable(true);
 		seekPrecision.setFocusableInTouchMode(true);
+
+		preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
@@ -117,6 +133,7 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 		String selection = null;
 		String[] selectionArgs = null;
 		tripId = getIntent().getIntExtra(DontForgetMomDbInformation.Trip._ID, -1);
+		firstScreen = getIntent().getBooleanExtra(DontForgetMomCst.INTENT_FIRST, false);
 		Cursor cursorTrip = null;
 		if (tripId != -1) {
 			selection = DontForgetMomDbInformation.Trip._ID + " = ? ";
@@ -151,7 +168,7 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 			showPrecision(50);
 			alertSMS.setChecked(true);
 			recipients.setText("");
-			messageContent.setText("");
+			messageContent.setText(messages[Integer.valueOf(preferences.getString(keyPref, "0"))]);
 		}
 
 		adapterPlace = new DontForgetMomContactAdapter(this, //
@@ -233,7 +250,7 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 					values.put(Trip._ID, tripId);
 				}
 
-				values.put(Trip.TRIP_NAME, placeEdit.getText().toString());
+				values.put(Trip.TRIP_NAME, getTitle().toString());
 				values.put(Trip.TRIP_PLACE, placeEdit.getText().toString());
 				values.put(Trip.TRIP_RECIPIENT, recipients.getText().toString());
 				if (alertSMS.isChecked() && alertMail.isChecked()) {
@@ -267,7 +284,11 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 
 				}
 				setResult(RESULT_OK);
+				if (firstScreen) {
+					startActivity(new Intent(getApplicationContext(), TripsActivity.class));
+				}
 				finish();
+
 			}
 			return true;
 		case R.id.ic_action_name:
@@ -374,6 +395,15 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 	public boolean onKey(View view, int arg1, KeyEvent arg2) {
 		((EditText) view).setError(null);
 		return false;
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == REQUEST_CODE_PREFERENCES && resultCode == RESULT_OK) {
+			messageContent.setText(messages[Integer.valueOf(preferences.getString(keyPref, "0"))]);
+			return;
+		}
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 }

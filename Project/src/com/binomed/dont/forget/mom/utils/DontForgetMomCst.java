@@ -12,6 +12,7 @@ public final class DontForgetMomCst {
 	public static final int PRECISION_LOW = 2;
 
 	public static final String INTENT_DUPLICATE = "com.binomed.dont.forget.mom.intent.duplicate";
+	public static final String INTENT_FIRST = "com.binomed.dont.forget.mom.intent.first";
 
 	public static final String PREF_CURENT_TRIP_NOT_IN_PROGRESS = "com.binomed.dont.forget.mom.pref.curentTrip";
 

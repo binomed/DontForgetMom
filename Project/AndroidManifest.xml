@@ -58,7 +58,7 @@
 			android:theme="@style/DonForgetMomTheme"
 			android:windowSoftInputMode="adjustPan">
         </activity>
-        <activity android:name=".screen.trips.InnerMapActivity"></activity>
+        <activity android:name=".screen.pref.Preferences"></activity>
         
      <provider android:name="com.binomed.dont.forget.mom.db.DontForgetMomContentProvider"
 			android:authorities="com.bibomed.dont.forget.mom.db"

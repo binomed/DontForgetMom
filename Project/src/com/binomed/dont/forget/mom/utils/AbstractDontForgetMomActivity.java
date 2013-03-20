@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.binomed.dont.forget.mom.R;
+import com.binomed.dont.forget.mom.screen.pref.Preferences;
 import com.google.inject.Inject;
 import com.google.inject.Key;
 
@@ -34,6 +35,8 @@ public abstract class AbstractDontForgetMomActivity extends SherlockFragmentActi
 
 	private static final int ITEM_ABOUT = 1;
 	private static final int ITEM_INFO = 2;
+
+	public static final int REQUEST_CODE_PREFERENCES = 10;
 
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
@@ -43,6 +46,9 @@ public abstract class AbstractDontForgetMomActivity extends SherlockFragmentActi
 			// final Intent intent = new Intent(this, DontForgetMomActivity.class);
 			// intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			// startActivity(intent);
+			return true;
+		case R.id.ic_action_pref:
+			startActivityForResult(new Intent(getApplicationContext(), Preferences.class), REQUEST_CODE_PREFERENCES);
 			return true;
 		case R.id.ic_action_about:
 			Toast.makeText(this, "About", Toast.LENGTH_SHORT).show();

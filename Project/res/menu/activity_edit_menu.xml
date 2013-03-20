@@ -21,5 +21,12 @@
         android:title="@string/action_help"
         android:titleCondensed="@string/action_help">
     </item>
+    <item
+        android:id="@+id/ic_action_pref"
+        android:icon="@drawable/ic_menu_preferences"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_pref"
+        android:titleCondensed="@string/action_pref">
+    </item>
 
 </menu>
