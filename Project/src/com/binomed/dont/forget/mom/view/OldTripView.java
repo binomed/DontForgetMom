@@ -30,6 +30,7 @@ import com.binomed.dont.forget.mom.utils.DontForgetMomCst;
 
 public class OldTripView extends RelativeLayout implements OnClickListener, OnActionItemClickListener {
 
+	ImageView inProgress;
 	ImageView actionOldTrip;
 	TextView oldTripName;
 	TextView oldTripLaunch;
@@ -102,12 +103,13 @@ public class OldTripView extends RelativeLayout implements OnClickListener, OnAc
 		oldTripName = (TextView) findViewById(R.id.oldTripName);
 		// @InjectView(R.id.oldTripLaunch)
 		oldTripLaunch = (TextView) findViewById(R.id.oldTripLaunch);
+		inProgress = (ImageView) findViewById(R.id.in_progress);
 
 		// Init listener
 		actionOldTrip.setOnClickListener(this);
 	}
 
-	public void setTrip(int tripId, String tripName, Date launch) {
+	public void setTrip(int tripId, String tripName, Date launch, boolean inProgress) {
 		this.tripId = tripId;
 		oldTripName.setText(tripName);
 		if (launch != null) {
@@ -115,6 +117,7 @@ public class OldTripView extends RelativeLayout implements OnClickListener, OnAc
 		} else {
 			oldTripLaunch.setText(R.string.trip_never_launch);
 		}
+		this.inProgress.setVisibility(inProgress ? View.INVISIBLE : View.VISIBLE);
 
 	}
 

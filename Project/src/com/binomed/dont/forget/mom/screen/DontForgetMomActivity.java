@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.binomed.dont.forget.mom.db.DontForgetMomContentProvider;
 import com.binomed.dont.forget.mom.db.DontForgetMomDbInformation;
@@ -33,6 +34,11 @@ public class DontForgetMomActivity extends Activity {
 					startActivity(editIntent);
 					finish();
 
+				}
+				try {
+					trips.close();
+				} catch (Exception e) {
+					Log.e(DontForgetMomActivity.class.getName(), e.getMessage(), e);
 				}
 				return null;
 			}

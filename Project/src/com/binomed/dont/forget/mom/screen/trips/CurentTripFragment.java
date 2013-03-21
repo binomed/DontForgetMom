@@ -1,5 +1,8 @@
 package com.binomed.dont.forget.mom.screen.trips;
 
+import java.io.IOException;
+import java.util.List;
+
 import net.londatiga.android.ActionItem;
 import net.londatiga.android.QuickAction;
 import net.londatiga.android.QuickAction.OnActionItemClickListener;
@@ -8,9 +11,13 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -25,6 +32,8 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.binomed.dont.forget.mom.R;
+import com.binomed.dont.forget.mom.db.DontForgetMomContentProvider;
+import com.binomed.dont.forget.mom.db.DontForgetMomDbInformation.Trip;
 import com.binomed.dont.forget.mom.utils.DontForgetMomCst;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -39,7 +48,11 @@ public class CurentTripFragment extends SherlockFragment implements LocationList
 	Marker curentPosition;
 	RelativeLayout mask;
 
+	TextView tripName;
+
 	SupportMapFragment mapFragment;
+	SharedPreferences prefs;
+	Address address;
 
 	private SherlockFragmentActivity activity;
 	private final static String ACTIVITY_TAG = "hosted";
@@ -65,8 +78,10 @@ public class CurentTripFragment extends SherlockFragment implements LocationList
 		imgMail.setOnClickListener(this);
 		imgCall.setOnClickListener(this);
 
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		manageMask(prefs.getBoolean(DontForgetMomCst.PREF_CURENT_TRIP_NOT_IN_PROGRESS, true));
+
+		tripName = (TextView) mainView.findViewById(R.id.tripName);
 
 		return mainView;
 
@@ -75,6 +90,54 @@ public class CurentTripFragment extends SherlockFragment implements LocationList
 	public void manageMask(boolean show) {
 		mask.setVisibility(show ? View.VISIBLE : View.GONE);
 		mainView.findViewById(R.id.scrollView).setVisibility(!show ? View.VISIBLE : View.GONE);
+		if (!show) {
+			fillViews();
+		}
+	}
+
+	public void fillViews() {
+		new AsyncTask<Void, Void, String>() {
+
+			@Override
+			protected String doInBackground(Void... params) {
+				String selection = Trip._ID + " = ?";
+				String[] args = new String[] { String.valueOf(prefs.getLong(DontForgetMomCst.PREF_CURENT_TRIP_IN_PROGRESS_ID, -1L)) };
+				Cursor cursor = getActivity().getContentResolver().query(DontForgetMomContentProvider.CONTENT_URI, null, selection, args, null);
+				String result = cursor.getString(cursor.getColumnIndex(Trip.TRIP_NAME));
+				Geocoder geocoder = new Geocoder(getActivity());
+				List<Address> addresses = null;
+
+				try {
+					// Getting a maximum of 3 Address that matches the input text
+					addresses = geocoder.getFromLocationName(cursor.getString(cursor.getColumnIndex(Trip.TRIP_PLACE)), 1);
+					if (addresses != null && addresses.size() > 0) {
+						address = addresses.get(0);
+					}
+				} catch (IOException e) {
+					Log.e(TAG, e.getMessage(), e);
+				}
+				try {
+					cursor.close();
+				} catch (Exception e) {
+					Log.e(TAG, e.getMessage(), e);
+				}
+
+				return result;
+			}
+
+			@Override
+			protected void onPostExecute(String result) {
+				tripName.setText(result);
+
+				if (address != null) {
+					LatLng geoPoint = new LatLng(address.getLatitude(), address.getLongitude());
+					curentPosition.setPosition(geoPoint);
+					mapFragment.getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(geoPoint, 15));
+				}
+			}
+
+		}.execute();
+
 	}
 
 	@Override

@@ -2,7 +2,9 @@ package com.binomed.dont.forget.mom.screen.trips;
 
 import roboguice.inject.InjectView;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -41,7 +43,10 @@ public class TripsActivity extends AbstractDontForgetMomActivity {
 
 		adapter = new DontForgetMomPagerAdapter(getSupportFragmentManager(), this);
 		viewPager.setAdapter(adapter);
-		pageIndicator.setViewPager(viewPager, 1);
+
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+		pageIndicator.setViewPager(viewPager, prefs.getBoolean(DontForgetMomCst.PREF_CURENT_TRIP_NOT_IN_PROGRESS, true) ? 0 : 1);
 
 	}
 

@@ -253,6 +253,7 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 
 				}
 
+				values.put(Trip.TRIP_IN_PROGRESS, 0);
 				values.put(Trip.TRIP_NAME, getTitle().toString());
 				values.put(Trip.TRIP_PLACE, placeEdit.getText().toString());
 				values.put(Trip.TRIP_RECIPIENT, recipients.getText().toString());

@@ -46,6 +46,7 @@ public class OldTripAdapter extends CursorAdapter {
 		view.setTrip(cursor.getInt(cursor.getColumnIndex(Trip._ID)) //
 				, cursor.getString(cursor.getColumnIndex(Trip.TRIP_NAME)) //
 				, lastLaunch //
+				, cursor.getShort(cursor.getColumnIndex(Trip.TRIP_IN_PROGRESS)) == 1 //
 		);
 	}
 

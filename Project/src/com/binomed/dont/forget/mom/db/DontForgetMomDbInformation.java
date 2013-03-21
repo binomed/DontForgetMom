@@ -23,6 +23,7 @@ public class DontForgetMomDbInformation {
 		public static final String TRIP_RECIPIENT = "TRIP_RECIPIENT";
 		public static final String TRIP_MESSAGE = "TRIP_MESSAGE";
 		public static final String TRIP_LAST_LAUNCH = "TRIP_LAST_LAUNCH";
+		public static final String TRIP_IN_PROGRESS = "TRIP_IN_PROGRESS";
 
 	}
 

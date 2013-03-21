@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.util.Log;
 
 import com.binomed.dont.forget.mom.db.DontForgetMomContentProvider;
 import com.binomed.dont.forget.mom.db.DontForgetMomDbInformation.Trip;
@@ -36,6 +37,11 @@ public class BootService extends IntentService {
 			intentService.putExtra(Trip._ID, cursor.getLong(cursor.getColumnIndex(Trip._ID)));
 			pendingIntent = PendingIntent.getService(getApplicationContext(), 0, intentService, 0);
 			alarm.set(AlarmManager.RTC_WAKEUP, date.getTimeInMillis(), pendingIntent);
+		}
+		try {
+			cursor.close();
+		} catch (Exception e) {
+			Log.e(BootService.class.getName(), e.getMessage(), e);
 		}
 
 	}

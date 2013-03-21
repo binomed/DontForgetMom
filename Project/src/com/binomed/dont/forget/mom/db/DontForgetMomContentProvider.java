@@ -168,6 +168,7 @@ public class DontForgetMomContentProvider extends ContentProvider {
 				DontForgetMomDbInformation.Trip.TRIP_PRECISION,//
 				DontForgetMomDbInformation.Trip.TRIP_RECIPIENT,//
 				DontForgetMomDbInformation.Trip.TRIP_TYPE_ALERT,//
+				DontForgetMomDbInformation.Trip.TRIP_IN_PROGRESS //
 		};
 		if (projection != null) {
 			HashSet<String> requestedColumns = new HashSet<String>(Arrays.asList(projection));

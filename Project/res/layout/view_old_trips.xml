@@ -20,6 +20,13 @@
     >
 
     <ImageView
+         android:id="@+id/in_progress"
+        android:layout_alignParentLeft="true"
+        android:layout_width="10dip"
+        android:layout_height="match_parent"
+        android:src="@drawable/green_vertical_line"
+        />
+    <ImageView
         android:id="@+id/actionOldTrip"
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content" 
