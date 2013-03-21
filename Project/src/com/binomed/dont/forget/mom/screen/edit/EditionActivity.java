@@ -248,6 +248,9 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 				ContentValues values = new ContentValues();
 				if (tripId != -1) {
 					values.put(Trip._ID, tripId);
+				} else {
+					values.put(Trip.TRIP_LAST_LAUNCH, -1);
+
 				}
 
 				values.put(Trip.TRIP_NAME, getTitle().toString());

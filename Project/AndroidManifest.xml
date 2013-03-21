@@ -29,6 +29,7 @@
 	
 	<!-- Alarm -->
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+	 <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
         android:name="DontForgetMomApplication"
@@ -73,6 +74,9 @@
      <meta-data
     android:name="com.google.android.maps.v2.API_KEY"
     android:value="AIzaSyBdGc_-zYmH-EE2bn7yEKxeEdggkNvpYKg"/>
+     <service android:name=".service.alarm.BootService"></service>
+     <service android:name=".service.alarm.LocalisationService"></service>
+     <service android:name=".service.alarm.PositionService"></service>
      
     </application>
     

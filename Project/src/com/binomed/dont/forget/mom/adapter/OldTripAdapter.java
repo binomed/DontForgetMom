@@ -48,4 +48,9 @@ public class OldTripAdapter extends CursorAdapter {
 				, lastLaunch //
 		);
 	}
+
+	public void replay(int tripId) {
+		fragment.replay(tripId);
+
+	}
 }

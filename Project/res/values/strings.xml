@@ -14,6 +14,7 @@
     <!-- Old trips -->
     <string name="no_trips">No trips done</string>
     <string name="old_action_replay">Replay</string>
+    <string name="old_action_replay_date">When do you want to replay the trip ?</string>
     <string name="old_action_duplicate">Duplicate</string>
     <string name="old_action_edit">Edit</string>    
     <string name="old_action_delete">Delete</string>    
@@ -53,8 +54,8 @@
     <string name="tripAlert">Alert information</string>
     <string name="tripPrecision">Precision to launch action</string>
     <string name="tripPrecisionLow">Low precision : 1km</string>
-    <string name="tripPrecisionMiddle">Fair precision : 100m</string>
-    <string name="tripPrecisionMHigh">High precision : 10m</string>
+    <string name="tripPrecisionMiddle">Fair precision : 400m</string>
+    <string name="tripPrecisionMHigh">High precision : 100m</string>
     <string name="tripKindAlert">Kind of alert</string>
     <string name="tripKAlertSMS">SMS alert</string>
     <string name="tripKAlertMail">Mail alert</string>

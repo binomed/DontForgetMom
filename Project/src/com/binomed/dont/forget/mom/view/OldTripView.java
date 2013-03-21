@@ -20,7 +20,6 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.binomed.dont.forget.mom.R;
 import com.binomed.dont.forget.mom.adapter.OldTripAdapter;
@@ -59,7 +58,9 @@ public class OldTripView extends RelativeLayout implements OnClickListener, OnAc
 	@InjectResource(R.string.old_confirm_delete_ok)
 	String strDeleteDialogBtnOk;
 	@InjectResource(android.R.string.cancel)
-	String strDeleteDialogBtnCandel;
+	String strDeleteDialogBtnCancel;
+	@InjectResource(R.string.trip_never_launch)
+	String strNeverLaunch;
 
 	private static final int ACTION_REPLAY = 1;
 	private static final int ACTION_DUPLICATE = 2;
@@ -134,7 +135,7 @@ public class OldTripView extends RelativeLayout implements OnClickListener, OnAc
 			// Toast.makeText(getContext(), "Duplicate", Toast.LENGTH_LONG);
 			break;
 		case ACTION_REPLAY:
-			Toast.makeText(getContext(), "Replay", Toast.LENGTH_LONG);
+			adapter.replay(tripId);
 
 			break;
 		case ACTION_EDIT:
@@ -161,7 +162,7 @@ public class OldTripView extends RelativeLayout implements OnClickListener, OnAc
 
 						}
 					}) //
-					.setNegativeButton(strDeleteDialogBtnCandel, new DialogInterface.OnClickListener() {
+					.setNegativeButton(strDeleteDialogBtnCancel, new DialogInterface.OnClickListener() {
 
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
