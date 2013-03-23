@@ -65,7 +65,7 @@ public class LocalisationService extends IntentService {
 					if (addressList != null && addressList.size() > 0) {
 						Address address = addressList.get(0);
 						Intent intentPosition = new Intent(getApplicationContext(), PositionService.class);
-						intentPosition.putExtra(Trip._ID, intent.getLongExtra(Trip._ID, -1L));
+						intentPosition.putExtra(Trip._ID, tripId);
 						PendingIntent pendingIntent = PendingIntent.getService(getApplicationContext(), 0, intentPosition, 0);
 						locationManager.addProximityAlert(address.getLatitude() //
 								, address.getLongitude() //

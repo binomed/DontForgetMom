@@ -103,23 +103,26 @@ public class CurentTripFragment extends SherlockFragment implements LocationList
 				String selection = Trip._ID + " = ?";
 				String[] args = new String[] { String.valueOf(prefs.getLong(DontForgetMomCst.PREF_CURENT_TRIP_IN_PROGRESS_ID, -1L)) };
 				Cursor cursor = getActivity().getContentResolver().query(DontForgetMomContentProvider.CONTENT_URI, null, selection, args, null);
-				String result = cursor.getString(cursor.getColumnIndex(Trip.TRIP_NAME));
-				Geocoder geocoder = new Geocoder(getActivity());
-				List<Address> addresses = null;
+				String result = null;
+				if (cursor.moveToFirst()) {
+					result = cursor.getString(cursor.getColumnIndex(Trip.TRIP_NAME));
+					Geocoder geocoder = new Geocoder(getActivity());
+					List<Address> addresses = null;
 
-				try {
-					// Getting a maximum of 3 Address that matches the input text
-					addresses = geocoder.getFromLocationName(cursor.getString(cursor.getColumnIndex(Trip.TRIP_PLACE)), 1);
-					if (addresses != null && addresses.size() > 0) {
-						address = addresses.get(0);
+					try {
+						// Getting a maximum of 3 Address that matches the input text
+						addresses = geocoder.getFromLocationName(cursor.getString(cursor.getColumnIndex(Trip.TRIP_PLACE)), 1);
+						if (addresses != null && addresses.size() > 0) {
+							address = addresses.get(0);
+						}
+					} catch (IOException e) {
+						Log.e(TAG, e.getMessage(), e);
 					}
-				} catch (IOException e) {
-					Log.e(TAG, e.getMessage(), e);
-				}
-				try {
-					cursor.close();
-				} catch (Exception e) {
-					Log.e(TAG, e.getMessage(), e);
+					try {
+						cursor.close();
+					} catch (Exception e) {
+						Log.e(TAG, e.getMessage(), e);
+					}
 				}
 
 				return result;
@@ -127,6 +130,9 @@ public class CurentTripFragment extends SherlockFragment implements LocationList
 
 			@Override
 			protected void onPostExecute(String result) {
+				if (result != null) {
+					return;
+				}
 				tripName.setText(result);
 
 				if (address != null) {

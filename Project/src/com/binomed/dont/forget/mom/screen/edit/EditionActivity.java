@@ -10,7 +10,9 @@ import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.KeyEvent;
@@ -43,6 +45,7 @@ import com.binomed.dont.forget.mom.db.DontForgetMomDbInformation;
 import com.binomed.dont.forget.mom.db.DontForgetMomDbInformation.Trip;
 import com.binomed.dont.forget.mom.dialog.DateDialogFragment;
 import com.binomed.dont.forget.mom.screen.trips.TripsActivity;
+import com.binomed.dont.forget.mom.service.alarm.LocalisationService;
 import com.binomed.dont.forget.mom.service.contact.ContactService;
 import com.binomed.dont.forget.mom.utils.AbstractDontForgetMomActivity;
 import com.binomed.dont.forget.mom.utils.DontForgetMomCst;
@@ -84,8 +87,8 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 
 	EditText txtNameActionBar;
 
-	private Date date = new Date(), hour = new Date();
-	private int tripId;
+	private Calendar date = Calendar.getInstance();
+	private long tripId;
 	private boolean firstScreen;
 
 	private DateFormat timeFormat;
@@ -252,8 +255,11 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 					values.put(Trip.TRIP_LAST_LAUNCH, -1);
 
 				}
-
-				values.put(Trip.TRIP_IN_PROGRESS, 0);
+				Calendar today = Calendar.getInstance();
+				boolean inProgress = today.get(Calendar.YEAR) == date.get(Calendar.YEAR) //
+						&& today.get(Calendar.MONTH) == date.get(Calendar.MONTH) //
+						&& today.get(Calendar.DAY_OF_MONTH) == date.get(Calendar.DAY_OF_MONTH);
+				values.put(Trip.TRIP_IN_PROGRESS, inProgress ? 1 : 0);
 				values.put(Trip.TRIP_NAME, getTitle().toString());
 				values.put(Trip.TRIP_PLACE, placeEdit.getText().toString());
 				values.put(Trip.TRIP_RECIPIENT, recipients.getText().toString());
@@ -275,7 +281,7 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 					values.put(Trip.TRIP_PRECISION, DontForgetMomCst.PRECISION_LOW);
 				}
 				values.put(Trip.TRIP_MESSAGE, messageContent.getText().toString());
-				values.put(Trip.TRIP_DAY, date.getTime());
+				values.put(Trip.TRIP_DAY, date.getTimeInMillis());
 
 				if (tripId != -1) {
 					// Update
@@ -284,13 +290,27 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 					getContentResolver().update(DontForgetMomContentProvider.CONTENT_URI, values, selection, selectionArgs);
 				} else {
 					// New
-					getContentResolver().insert(DontForgetMomContentProvider.CONTENT_URI, values);
+					Uri uriTrip = getContentResolver().insert(DontForgetMomContentProvider.CONTENT_URI, values);
+					tripId = Long.valueOf(uriTrip.getPathSegments().get(1));
 
 				}
+				if (inProgress) {
+					// We start the service
+					Intent intentLocaltion = new Intent(getApplicationContext(), LocalisationService.class);
+					intentLocaltion.putExtra(Trip._ID, tripId);
+					startService(intentLocaltion);
+					SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+					Editor editor = prefs.edit();
+					editor.putBoolean(DontForgetMomCst.PREF_CURENT_TRIP_NOT_IN_PROGRESS, true);
+					editor.putLong(DontForgetMomCst.PREF_CURENT_TRIP_IN_PROGRESS_ID, tripId);
+					editor.commit();
+				}
+
 				setResult(RESULT_OK);
 				if (firstScreen) {
 					startActivity(new Intent(getApplicationContext(), TripsActivity.class));
 				}
+
 				finish();
 
 			}
@@ -387,11 +407,9 @@ public class EditionActivity extends AbstractDontForgetMomActivity //
 
 	@Override
 	public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.YEAR, year);
-		calendar.set(Calendar.MONTH, monthOfYear);
-		calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-		date = calendar.getTime();
+		date.set(Calendar.YEAR, year);
+		date.set(Calendar.MONTH, monthOfYear);
+		date.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
 	}
 
