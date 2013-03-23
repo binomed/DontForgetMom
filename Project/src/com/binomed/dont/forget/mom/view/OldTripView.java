@@ -117,7 +117,7 @@ public class OldTripView extends RelativeLayout implements OnClickListener, OnAc
 		} else {
 			oldTripLaunch.setText(R.string.trip_never_launch);
 		}
-		// this.inProgress.setVisibility(inProgress ? View.VISIBLE : View.GONE);
+		this.inProgress.setVisibility(inProgress ? View.VISIBLE : View.GONE);
 
 	}
 
